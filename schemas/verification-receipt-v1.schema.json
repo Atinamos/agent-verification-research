@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://verify.atinamos.co.uk/schemas/verification-receipt-v1.schema.json",
+  "title": "Atinamos Public Verification Receipt v1",
+  "description": "Schema for a deliberately published, sanitised technical evidence record describing one Atinamos observation of a paid machine service.",
+  "type": "object",
+  "required": [
+    "evidence_version",
+    "observation_id",
+    "observed_at",
+    "provider",
+    "service",
+    "request",
+    "payment",
+    "fulfilment",
+    "assertions",
+    "response_hash_sha256",
+    "classification",
+    "limitations"
+  ],
+  "properties": {
+    "evidence_version": {"type": "string"},
+    "observation_id": {"type": "string"},
+    "observed_at": {"type": "string", "format": "date-time"},
+    "provider": {"type": "string"},
+    "service": {"type": "string"},
+    "request": {
+      "type": "object",
+      "required": ["endpoint", "method"],
+      "properties": {
+        "endpoint": {"type": "string", "format": "uri"},
+        "method": {"type": "string"},
+        "test_input_summary": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "payment": {
+      "type": "object",
+      "required": ["protocol", "version", "scheme", "network", "amount_usdc", "initial_http_status", "paid_http_status", "transaction"],
+      "properties": {
+        "protocol": {"type": "string"},
+        "version": {"type": ["string", "integer"]},
+        "scheme": {"type": "string"},
+        "network": {"type": "string"},
+        "amount_usdc": {"type": "number", "minimum": 0},
+        "initial_http_status": {"type": "integer"},
+        "paid_http_status": {"type": "integer"},
+        "transaction": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "fulfilment": {
+      "type": "object",
+      "required": ["observed", "output_valid"],
+      "properties": {
+        "observed": {"type": "boolean"},
+        "output_valid": {"type": "boolean"},
+        "seller_final_status": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "assertions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["description", "passed"],
+        "properties": {
+          "description": {"type": "string"},
+          "passed": {"type": "boolean"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "response_hash_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "classification": {"type": "string"},
+    "limitations": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  },
+  "additionalProperties": false
+}
