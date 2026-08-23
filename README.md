@@ -12,6 +12,11 @@ It exists to publish selected, sanitised material that helps developers, researc
 
 Atinamos produces evidence. Trust is the conclusion the buyer reaches from that evidence.
 
+## Methodology
+
+- [Evidence & Classification Methodology](methodology/evidence-and-classification.md) — defines the observable evidence stages, current public classifications, unknown-evidence handling, interpretation rules and public/private methodology boundary.
+- [Public verification receipt v1 schema](schemas/verification-receipt-v1.schema.json)
+
 ## Published evidence
 
 ### 22 August 2026 — x402Node JSON Repair
@@ -42,8 +47,6 @@ Atinamos paid 0.01 USDC for the externally owned Web Screenshot service. Settlem
 **Classification:** `settled_fulfilment_contract_invalid`
 
 These are timestamped observations, not permanent trust ratings. Successful and unsuccessful observations are deliberately retained.
-
-- [Public verification receipt v1 schema](schemas/verification-receipt-v1.schema.json)
 
 ## This repository may contain
 
