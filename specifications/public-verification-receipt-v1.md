@@ -18,7 +18,7 @@ The JSON representation is defined by:
 
 The evidence-stage and classification semantics are defined by:
 
-[`methodology/evidence-classification-methodology-v1.md`](../methodology/evidence-classification-methodology-v1.md)
+[`methodology/evidence-and-classification.md`](../methodology/evidence-and-classification.md)
 
 ## Interpretation rule
 
