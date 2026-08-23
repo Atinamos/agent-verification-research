@@ -32,6 +32,15 @@ Atinamos observed a live x402 v1 payment requirement, recorded a malformed `payT
 
 **Classification:** `pre_settlement_paid_path_failure`
 
+### 22 August 2026 — x402engine Web Screenshot
+
+Atinamos paid 0.01 USDC for the externally owned Web Screenshot service. Settlement was observed and the paid request returned HTTP 200 with metadata matching the controlled target, but the primary screenshot value failed strict base64/PNG validation.
+
+- [Technical experiment record](experiments/2026-08-22-x402engine-web-screenshot/README.md)
+- [Sanitised verification receipt](experiments/2026-08-22-x402engine-web-screenshot/verification-receipt.json)
+
+**Classification:** `settled_fulfilment_contract_invalid`
+
 These are timestamped observations, not permanent trust ratings. Successful and unsuccessful observations are deliberately retained.
 
 - [Public verification receipt v1 schema](schemas/verification-receipt-v1.schema.json)
