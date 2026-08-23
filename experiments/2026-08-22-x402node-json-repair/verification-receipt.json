@@ -1,0 +1,52 @@
+{
+  "evidence_version": "atinamos.public-verification.v1",
+  "observation_id": "2026-08-22-x402node-json-repair-001",
+  "observed_at": "2026-08-22T11:54:38.875676+00:00",
+  "provider": "x402Node",
+  "service": "JSON Repair",
+  "request": {
+    "endpoint": "https://api.x402node.dev/ai/json-repair",
+    "method": "POST",
+    "test_input_summary": "Deliberately malformed JSON-like input representing {foo: 'bar', broken: true,}."
+  },
+  "payment": {
+    "protocol": "x402",
+    "version": 2,
+    "scheme": "exact",
+    "network": "eip155:8453",
+    "amount_usdc": 0.006,
+    "initial_http_status": 402,
+    "paid_http_status": 200,
+    "transaction": "0x9f49fa8a1ffd8c4331a5a1400a78f1bdce3488402957847dc18e1b26f2f44af2"
+  },
+  "fulfilment": {
+    "observed": true,
+    "output_valid": true,
+    "seller_final_status": "completed"
+  },
+  "assertions": [
+    {
+      "description": "Original input was recognised as invalid.",
+      "passed": true
+    },
+    {
+      "description": "Repair was reported as having occurred.",
+      "passed": true
+    },
+    {
+      "description": "Repaired data preserved foo = bar.",
+      "passed": true
+    },
+    {
+      "description": "Repaired data preserved broken = true.",
+      "passed": true
+    }
+  ],
+  "response_hash_sha256": "aab151bda89b03aac9910daf671014c5a82e4a0c18129069f3bdc859f9ec4feb",
+  "classification": "settled_fulfilment_valid",
+  "limitations": [
+    "This is one timestamped observation, not a permanent trust rating.",
+    "The observation does not prove that the service will succeed for every future request or input.",
+    "Atinamos publishes evidence; the buyer remains responsible for its own procurement decision."
+  ]
+}
