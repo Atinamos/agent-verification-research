@@ -12,6 +12,10 @@ It exists to publish selected, sanitised material that helps developers, researc
 
 Atinamos produces evidence. Trust is the conclusion the buyer reaches from that evidence.
 
+## Public evidence index
+
+- [Atinamos Public Evidence Index](EVIDENCE_INDEX.md) — one place to review the currently published direct verification observations, classifications, study links and technical receipts.
+
 ## Methodology and specifications
 
 - [Evidence & Classification Methodology v1.0](methodology/evidence-and-classification.md) — defines observable evidence stages, current public classifications, unknown-evidence handling and interpretation rules.
