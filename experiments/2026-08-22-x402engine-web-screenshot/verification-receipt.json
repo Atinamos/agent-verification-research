@@ -1,0 +1,57 @@
+{
+  "evidence_version": "atinamos.public-verification-receipt.v1",
+  "observation_id": "2026-08-22-x402engine-web-screenshot",
+  "observed_at": "2026-08-22T12:43:50.987680Z",
+  "provider": "x402engine",
+  "service": "Web Screenshot",
+  "request": {
+    "endpoint": "https://x402engine.app/api/web/screenshot?url=https://example.com&full_page=false",
+    "method": "GET",
+    "test_input_summary": "Controlled screenshot request for https://example.com with full_page=false."
+  },
+  "payment": {
+    "protocol": "x402",
+    "version": 2,
+    "scheme": "exact",
+    "network": "eip155:8453",
+    "amount_usdc": 0.01,
+    "initial_http_status": 402,
+    "paid_http_status": 200,
+    "authorization_created": true,
+    "authorized_request_sent": true,
+    "settlement_observed": true,
+    "transaction": "0x362e2520619063c42fddbcb9dc0db62052e460fd8ba02daab1c56dcb3ea47e2b"
+  },
+  "contract_anomalies": [],
+  "evidence_hashes": {
+    "payment_challenge_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+  },
+  "fulfilment": {
+    "observed": true,
+    "output_valid": false,
+    "seller_final_status": "completed"
+  },
+  "assertions": [
+    {
+      "description": "metadata.title equals Example Domain",
+      "passed": true
+    },
+    {
+      "description": "metadata.statusCode equals 200",
+      "passed": true
+    },
+    {
+      "description": "screenshot is valid base64 and decodes to bytes beginning with the PNG signature 89504e470d0a1a0a",
+      "passed": false
+    }
+  ],
+  "response_hash_sha256": "d8bb1c27d507b693926972bd1bf1c10ce74d76ee4b2d316481fefd331f7c906d",
+  "classification": "settled_fulfilment_contract_invalid",
+  "limitations": [
+    "This is one timestamped observation of one endpoint invocation.",
+    "The observation does not establish that x402engine always returns a contract-invalid artefact.",
+    "The observation does not establish that the provider as a whole is unsafe or untrustworthy.",
+    "The returned screenshot value failed strict base64 decoding; the retained evidence does not establish its exact alternate representation.",
+    "Atinamos did not assess visual fidelity, dimensions or page completeness because the artefact failed the advertised representation check first."
+  ]
+}
