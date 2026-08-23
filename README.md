@@ -12,10 +12,11 @@ It exists to publish selected, sanitised material that helps developers, researc
 
 Atinamos produces evidence. Trust is the conclusion the buyer reaches from that evidence.
 
-## Methodology
+## Methodology and specifications
 
-- [Evidence & Classification Methodology](methodology/evidence-and-classification.md) — defines the observable evidence stages, current public classifications, unknown-evidence handling, interpretation rules and public/private methodology boundary.
-- [Public verification receipt v1 schema](schemas/verification-receipt-v1.schema.json)
+- [Evidence & Classification Methodology v1.0](methodology/evidence-and-classification.md) — defines observable evidence stages, current public classifications, unknown-evidence handling and interpretation rules.
+- [Public Verification Receipt Specification v1.0](specifications/public-verification-receipt-v1.md) — explains every public receipt field, null/unknown semantics, buyer interpretation and sanitisation boundaries.
+- [Public Verification Receipt v1 JSON Schema](schemas/verification-receipt-v1.schema.json) — machine-readable receipt contract.
 
 ## Published evidence
 
