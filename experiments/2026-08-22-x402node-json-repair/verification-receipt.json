@@ -1,5 +1,5 @@
 {
-  "evidence_version": "atinamos.public-verification.v1",
+  "evidence_version": "atinamos.public-verification-receipt.v1",
   "observation_id": "2026-08-22-x402node-json-repair-001",
   "observed_at": "2026-08-22T11:54:38.875676+00:00",
   "provider": "x402Node",
@@ -17,6 +17,7 @@
     "amount_usdc": 0.006,
     "initial_http_status": 402,
     "paid_http_status": 200,
+    "settlement_observed": true,
     "transaction": "0x9f49fa8a1ffd8c4331a5a1400a78f1bdce3488402957847dc18e1b26f2f44af2"
   },
   "fulfilment": {
