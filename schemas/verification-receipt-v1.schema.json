@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://verify.atinamos.co.uk/schemas/verification-receipt-v1.schema.json",
   "title": "Atinamos Public Verification Receipt v1",
-  "description": "Schema for a deliberately published, sanitised technical evidence record describing one Atinamos observation of a paid machine service.",
+  "description": "Schema for a deliberately published, sanitised technical evidence record describing one Atinamos observation of a paid machine service, including successful and failed observations.",
   "type": "object",
   "required": [
     "evidence_version",
@@ -44,8 +44,32 @@
         "network": {"type": "string"},
         "amount_usdc": {"type": "number", "minimum": 0},
         "initial_http_status": {"type": "integer"},
-        "paid_http_status": {"type": "integer"},
-        "transaction": {"type": "string"}
+        "paid_http_status": {"type": ["integer", "null"]},
+        "authorization_created": {"type": "boolean"},
+        "authorized_request_sent": {"type": "boolean"},
+        "settlement_observed": {"type": ["boolean", "null"]},
+        "transaction": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "contract_anomalies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["field", "type", "description"],
+        "properties": {
+          "field": {"type": "string"},
+          "type": {"type": "string"},
+          "description": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "evidence_hashes": {
+      "type": "object",
+      "properties": {
+        "payment_challenge_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "normalized_payment_challenge_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
       },
       "additionalProperties": false
     },
@@ -71,7 +95,7 @@
         "additionalProperties": false
       }
     },
-    "response_hash_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "response_hash_sha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
     "classification": {"type": "string"},
     "limitations": {
       "type": "array",
