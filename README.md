@@ -20,9 +20,21 @@ Atinamos independently exercised and paid the externally owned x402Node JSON Rep
 
 - [Technical experiment record](experiments/2026-08-22-x402node-json-repair/README.md)
 - [Sanitised verification receipt](experiments/2026-08-22-x402node-json-repair/verification-receipt.json)
-- [Public verification receipt v1 schema](schemas/verification-receipt-v1.schema.json)
 
-This is one timestamped observation, not a permanent trust rating.
+**Classification:** `settled_fulfilment_valid`
+
+### 22 August 2026 — x402.direct Service Directory Search
+
+Atinamos observed a live x402 v1 payment requirement, recorded a malformed `payTo` field, created and sent the payment authorization, and received HTTP 500 on the authorised request. A subsequent read-only chain reconciliation found no 0.001 USDC settlement, and no fulfilment result was returned.
+
+- [Technical experiment record](experiments/2026-08-22-x402direct-search/README.md)
+- [Sanitised verification receipt](experiments/2026-08-22-x402direct-search/verification-receipt.json)
+
+**Classification:** `pre_settlement_paid_path_failure`
+
+These are timestamped observations, not permanent trust ratings. Successful and unsuccessful observations are deliberately retained.
+
+- [Public verification receipt v1 schema](schemas/verification-receipt-v1.schema.json)
 
 ## This repository may contain
 
