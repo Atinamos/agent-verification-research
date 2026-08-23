@@ -1,0 +1,51 @@
+{
+  "evidence_version": "atinamos.public-verification-receipt.v1",
+  "observation_id": "2026-08-22-x402direct-search",
+  "observed_at": "2026-08-22T12:23:51.641528Z",
+  "provider": "x402.direct",
+  "service": "Service Directory Search",
+  "request": {
+    "endpoint": "https://x402.direct/api/search?q=weather+api&limit=3",
+    "method": "GET",
+    "test_input_summary": "Paid search query for 'weather api' with result limit 3."
+  },
+  "payment": {
+    "protocol": "x402",
+    "version": 1,
+    "scheme": "exact",
+    "network": "base",
+    "amount_usdc": 0.001,
+    "initial_http_status": 402,
+    "paid_http_status": 500,
+    "authorization_created": true,
+    "authorized_request_sent": true,
+    "settlement_observed": false,
+    "transaction": null
+  },
+  "contract_anomalies": [
+    {
+      "field": "accepts[0].payTo",
+      "type": "surrounding_whitespace",
+      "description": "The live x402 payment challenge contained a trailing newline in the payTo value. Atinamos preserved the anomaly as evidence and normalised surrounding whitespace only for authorization construction."
+    }
+  ],
+  "evidence_hashes": {
+    "payment_challenge_sha256": "293f5d56f90bac1d5246cd0fea0c142f218b7ab0f1c461aae1fbb5875ae74390",
+    "normalized_payment_challenge_sha256": "847721997fbe35289cbcc4997b553d545a82d874da5f87fa453cfaa6c98a6195"
+  },
+  "fulfilment": {
+    "observed": false,
+    "output_valid": false,
+    "seller_final_status": null
+  },
+  "assertions": [],
+  "response_hash_sha256": null,
+  "classification": "pre_settlement_paid_path_failure",
+  "limitations": [
+    "This is one timestamped observation of one endpoint invocation.",
+    "No USDC settlement was observed; this is not evidence that the seller took payment and failed to deliver.",
+    "The observation does not establish that the malformed payTo field caused the HTTP 500 response.",
+    "The observation does not establish that x402.direct generally fails or that a later invocation would behave the same way.",
+    "No search output was returned, so Atinamos did not assess the quality or relevance of search results."
+  ]
+}
