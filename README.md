@@ -2,6 +2,9 @@
 
 Public research, schemas and technical evidence for Atinamos independent verification of paid AI agent services.
 
+**Human-readable research:** https://verify.atinamos.co.uk  
+**Technical evidence:** this repository
+
 > **You can pay to be tested. You cannot pay to be trusted.**
 
 ## Purpose
@@ -90,6 +93,15 @@ GitHub is not where Atinamos Verification runs. It is where Atinamos publishes s
 - `specifications/` — public technical specifications and interfaces.
 
 See `PUBLICATION_POLICY.md` before adding any material.
+
+## Licensing
+
+Copyright © 2026 MotionFil-AI.
+
+- Research, methodology, written evidence, findings, specifications and datasets are licensed under **CC BY 4.0** unless a file states otherwise.
+- Schemas, machine-readable receipts/examples and future source code are licensed under the **MIT License** unless a file states otherwise.
+
+See [LICENSE.md](LICENSE.md) for the full split-licence terms and suggested attribution.
 
 ## Human-readable research
 
