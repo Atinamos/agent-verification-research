@@ -12,6 +12,18 @@ It exists to publish selected, sanitised material that helps developers, researc
 
 Atinamos produces evidence. Trust is the conclusion the buyer reaches from that evidence.
 
+## Published evidence
+
+### 22 August 2026 — x402Node JSON Repair
+
+Atinamos independently exercised and paid the externally owned x402Node JSON Repair service, observed fulfilment and checked four objective output assertions. All four passed.
+
+- [Technical experiment record](experiments/2026-08-22-x402node-json-repair/README.md)
+- [Sanitised verification receipt](experiments/2026-08-22-x402node-json-repair/verification-receipt.json)
+- [Public verification receipt v1 schema](schemas/verification-receipt-v1.schema.json)
+
+This is one timestamped observation, not a permanent trust rating.
+
 ## This repository may contain
 
 - public evidence schemas;
