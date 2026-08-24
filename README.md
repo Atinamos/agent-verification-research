@@ -25,6 +25,17 @@ Atinamos produces evidence. Trust is the conclusion the buyer reaches from that 
 - [Public Verification Receipt Specification v1.0](specifications/public-verification-receipt-v1.md) — explains every public receipt field, null/unknown semantics, buyer interpretation and sanitisation boundaries.
 - [Public Verification Receipt v1 JSON Schema](schemas/verification-receipt-v1.schema.json) — machine-readable receipt contract.
 
+## Public research notes
+
+### 24 August 2026 — Observed ≠ Resolved
+
+A controlled x402.jobs ingestion test showed why an observed marketplace listing may contain useful evidence without yet establishing a canonical executable service identity. Atinamos retained unresolved listings rather than inventing missing HTTP methods.
+
+- [Observed ≠ Resolved: Why a Marketplace Listing Is Not Yet a Canonical Machine Contract](research/2026-08-24-observed-does-not-mean-resolved.md)
+- Human-readable article: https://verify.atinamos.co.uk/research/observed-does-not-mean-resolved/
+
+The controlled sample was 10 listings and is not presented as an estimate of the full x402.jobs catalogue.
+
 ## Published evidence
 
 ### 22 August 2026 — x402Node JSON Repair
@@ -90,6 +101,7 @@ GitHub is not where Atinamos Verification runs. It is where Atinamos publishes s
 - `methodology/` — public verification methodology and evidence interpretation.
 - `experiments/` — deliberately published experiment records.
 - `datasets/` — deliberately published public datasets.
+- `research/` — public technical research notes derived from controlled Atinamos observations.
 - `specifications/` — public technical specifications and interfaces.
 
 See `PUBLICATION_POLICY.md` before adding any material.
