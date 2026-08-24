@@ -27,6 +27,15 @@ Atinamos produces evidence. Trust is the conclusion the buyer reaches from that 
 
 ## Public research notes
 
+### 24 August 2026 — Machine-Service Market Snapshot
+
+At snapshot time the private Atinamos evidence catalogue contained 60,234 canonical machine services, 69,220 resolved marketplace/source records and 71,817 longitudinal source observations. The public note publishes aggregate counts and methodology only; the underlying catalogue remains private.
+
+- [Machine-Service Market Snapshot — 24 August 2026](research/2026-08-24-machine-service-market-snapshot.md)
+- Human-readable article: https://verify.atinamos.co.uk/research/machine-service-market-snapshot-2026-08-24/
+
+The figures are timestamped Atinamos observations and are not presented as the total size of the global machine-service market.
+
 ### 24 August 2026 — Observed ≠ Resolved
 
 A controlled x402.jobs ingestion test showed why an observed marketplace listing may contain useful evidence without yet establishing a canonical executable service identity. Atinamos retained unresolved listings rather than inventing missing HTTP methods.
