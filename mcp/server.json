@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "uk.co.atinamos/evidence",
   "title": "Atinamos Evidence",
-  "description": "Read-only independent verification evidence for paid machine services. AI agents can look up published observations, inspect service history, search published evidence and evaluate evidence against buyer-supplied procurement rules.",
+  "description": "Read-only verification evidence for paid machine services and buyer policy checks.",
   "repository": {
     "url": "https://github.com/Atinamos/agent-verification-research",
     "source": "github"
