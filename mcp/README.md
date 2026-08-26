@@ -2,7 +2,12 @@
 
 The Atinamos Evidence MCP is the public, read-only machine interface to selected published Atinamos verification evidence.
 
-**MCP endpoint:** `https://verify.atinamos.co.uk/mcp`
+**MCP endpoint:** `https://verify.atinamos.co.uk/mcp`  
+**Official MCP Registry name:** `uk.co.atinamos/evidence`  
+**Registry version:** `1.0.0`  
+**Registry status:** `active`
+
+The server was published to the official Model Context Protocol Registry on 26 August 2026 using HTTP domain verification for `atinamos.co.uk`.
 
 It is intended for AI agents, agent frameworks and developers that want to query Atinamos evidence before making their own procurement or risk decision.
 
@@ -26,6 +31,7 @@ The MCP does not return a universal trust or safety rating. It exposes timestamp
 - [MCP Inspector examples](examples/INSPECTOR.md)
 - [Example responses](examples/RESPONSES.md)
 - [Buyer policy JSON Schema](schemas/buyer-policy.schema.json)
+- [Official Registry metadata](server.json)
 
 ## What this MCP currently reads
 
