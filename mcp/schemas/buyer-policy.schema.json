@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://verify.atinamos.co.uk/schemas/mcp-buyer-policy-v1.json",
+  "title": "Atinamos MCP Buyer Policy v1",
+  "description": "Caller-supplied procurement policy accepted by the Atinamos Evidence MCP evaluate_policy tool.",
+  "type": "object",
+  "properties": {
+    "require_known": {
+      "type": "boolean",
+      "default": true,
+      "description": "Require the service to be represented in the published Atinamos evidence corpus."
+    },
+    "minimum_successful_fulfilments": {
+      "type": "integer",
+      "minimum": 0,
+      "default": 0,
+      "description": "Minimum number of published successful fulfilments required."
+    },
+    "maximum_failed_fulfilments": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Maximum number of published failed fulfilments permitted."
+    },
+    "require_paid_evidence": {
+      "type": "boolean",
+      "default": false,
+      "description": "Require at least one published paid test."
+    },
+    "max_evidence_age_days": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Maximum age in days of the latest published verification timestamp."
+    },
+    "max_price_usdc": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Maximum permitted observed USDC price from the latest published observation when available."
+    }
+  },
+  "additionalProperties": true
+}
