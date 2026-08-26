@@ -19,6 +19,20 @@ Atinamos produces evidence. Trust is the conclusion the buyer reaches from that 
 
 - [Atinamos Public Evidence Index](EVIDENCE_INDEX.md) — one place to review the currently published direct verification observations, classifications, study links and technical receipts.
 
+## Public Evidence MCP
+
+AI agents and developers can query selected published Atinamos evidence through the read-only Atinamos Evidence MCP.
+
+**Endpoint:** `https://verify.atinamos.co.uk/mcp`
+
+- [MCP documentation and index](mcp/README.md)
+- [Quick start](mcp/QUICKSTART.md)
+- [Tool reference](mcp/TOOLS.md)
+- [Buyer policy reference](mcp/BUYER_POLICY.md)
+- [Security and scope](mcp/SECURITY.md)
+
+The MCP exposes evidence and caller-supplied policy evaluation. It does not expose wallet access, payment signing, verification-triggering writes or a universal trust verdict.
+
 ## Methodology and specifications
 
 - [Evidence & Classification Methodology v1.0](methodology/evidence-and-classification.md) — defines observable evidence stages, current public classifications, unknown-evidence handling and interpretation rules.
@@ -105,6 +119,7 @@ GitHub is not where Atinamos Verification runs. It is where Atinamos publishes s
 
 ## Repository structure
 
+- `mcp/` — public Atinamos Evidence MCP endpoint documentation, tool reference, buyer-policy schema and tested examples.
 - `schemas/` — public machine-readable evidence schemas.
 - `examples/` — sanitised example requests, responses and receipts.
 - `methodology/` — public verification methodology and evidence interpretation.
