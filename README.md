@@ -11,7 +11,7 @@ Public research, schemas and technical evidence for Atinamos independent verific
 
 This repository is the public technical publication layer for Atinamos Verification.
 
-It exists to publish selected, sanitised material that helps developers, researchers, buyer agents, marketplaces and registries understand and consume Atinamos evidence.
+It exists to publish selected, sanitised material that helps developers, researchers, buyer agents, marketplaces and registries understand and consume Atinamos evidence and public machine-service interfaces.
 
 Atinamos produces evidence. Trust is the conclusion the buyer reaches from that evidence.
 
@@ -31,7 +31,22 @@ AI agents and developers can query selected published Atinamos evidence through 
 - [Buyer policy reference](mcp/BUYER_POLICY.md)
 - [Security and scope](mcp/SECURITY.md)
 
-The MCP exposes evidence and caller-supplied policy evaluation. It does not expose wallet access, payment signing, verification-triggering writes or a universal trust verdict.
+The MCP exposes deliberately published evidence and caller-supplied policy evaluation. It does not expose wallet access, payment signing, verification-triggering writes, the full private harvest registry or a universal trust verdict.
+
+## Public Market Search
+
+Atinamos now exposes a bounded, read-only search projection of the wider machine-service harvest registry.
+
+**Search:** `GET https://verify.atinamos.co.uk/v1/market/search?q=<query>&limit=<1-50>`  
+**Service detail:** `GET https://verify.atinamos.co.uk/v1/market/service/<service_id>`
+
+- [Market Search documentation](market/README.md)
+
+Market Search reports services observed by Atinamos harvesters, their source provenance and `last_observed_at`. Observation does not establish current availability, safety, trust or independent verification. **UNKNOWN is not UNSAFE.**
+
+Market Search and the Evidence MCP are intentionally different surfaces: Market Search supports discovery across a bounded public projection of the harvested registry; Evidence MCP exposes selected published verification evidence. A Market Search result does not imply that published verification evidence exists for that service.
+
+The private PostgreSQL database remains private. The public Verify deployment reaches Market Search through a bounded GET-only proxy rather than receiving database credentials.
 
 ## Methodology and specifications
 
@@ -43,7 +58,7 @@ The MCP exposes evidence and caller-supplied policy evaluation. It does not expo
 
 ### 24 August 2026 — Machine-Service Market Snapshot
 
-At snapshot time the private Atinamos evidence catalogue contained 60,234 canonical machine services, 69,220 resolved marketplace/source records and 71,817 longitudinal source observations. The public note publishes aggregate counts and methodology only; the underlying catalogue remains private.
+At snapshot time the private Atinamos evidence catalogue contained 60,234 canonical machine services, 69,220 resolved marketplace/source records and 71,817 longitudinal source observations. The underlying PostgreSQL registry remains private; since 27 August 2026 a bounded read-only public projection can be searched through Atinamos Market Search. The published snapshot remains a timestamped aggregate research record.
 
 - [Machine-Service Market Snapshot — 24 August 2026](research/2026-08-24-machine-service-market-snapshot.md)
 - Human-readable article: https://verify.atinamos.co.uk/research/machine-service-market-snapshot-2026-08-24/
@@ -95,6 +110,7 @@ These are timestamped observations, not permanent trust ratings. Successful and 
 - public evidence schemas;
 - sanitised verification receipts;
 - sample API responses;
+- public Market Search interface documentation;
 - methodology suitable for technical scrutiny;
 - experiment datasets selected for publication;
 - public research Markdown;
@@ -109,17 +125,19 @@ These are timestamped observations, not permanent trust ratings. Successful and 
 - Render Check implementation;
 - credentials, secrets or wallet material;
 - private infrastructure information;
-- private filesystem or host details;
+- the private PostgreSQL registry;
+- raw private source payloads;
 - unpublished anti-abuse techniques;
 - internal challenge-generation logic;
 - private operational documentation;
 - material that would materially assist gaming of verification.
 
-GitHub is not where Atinamos Verification runs. It is where Atinamos publishes selected technical evidence about what the verifier observed.
+GitHub is not where Atinamos Verification runs. It is where Atinamos publishes selected technical evidence and documentation for its public machine interfaces.
 
 ## Repository structure
 
 - `mcp/` — public Atinamos Evidence MCP endpoint documentation, tool reference, buyer-policy schema and tested examples.
+- `market/` — public Market Search endpoint, scope and interpretation documentation.
 - `schemas/` — public machine-readable evidence schemas.
 - `examples/` — sanitised example requests, responses and receipts.
 - `methodology/` — public verification methodology and evidence interpretation.
