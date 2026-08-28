@@ -1,0 +1,90 @@
+{
+  "schema": "atinamos.public-autonomous-buyer-receipt.v1",
+  "experiment_id": "proof3-autonomous-buyer-2026-08-28",
+  "observed_at": "2026-08-28T11:21:42Z",
+  "finished_at": "2026-08-28T11:21:45Z",
+  "goal": "Repair malformed JSON while preserving the supplied data.",
+  "discovery": {
+    "source": "coinbase_x402_bazaar_via_external_agent_orchestrator",
+    "seller_preselected_by_human": false,
+    "candidate_count_returned": 8,
+    "exact_route_preflight_required": true,
+    "redirects_followed": false,
+    "selected_rank": 1,
+    "selected_provider": "keyronne.com",
+    "selected_service": "JSON Repair",
+    "selected_endpoint": "https://keyronne.com/api/json-repair",
+    "selected_method": "POST",
+    "selected_advertised_price_usdc": 0.001
+  },
+  "buyer_policy": {
+    "max_spend_usdc": 0.02,
+    "network": "eip155:8453",
+    "asset": "Base USDC",
+    "x402_version": 2,
+    "scheme": "exact",
+    "require_published_atinamos_evidence": true,
+    "require_paid_evidence": true,
+    "minimum_successful_fulfilments": 1,
+    "maximum_failed_fulfilments": 0,
+    "max_evidence_age_days": 30,
+    "public_https_only": true,
+    "redirects_allowed": false
+  },
+  "selected_evidence_summary": {
+    "known": true,
+    "paid_tests": 1,
+    "successful_fulfilments": 1,
+    "failed_fulfilments": 0,
+    "policy_result": "eligible"
+  },
+  "contract_preflight": {
+    "endpoint": "https://keyronne.com/api/json-repair",
+    "http_status": 402,
+    "payment_required": true,
+    "valid": true,
+    "payment_sent": false
+  },
+  "payment": {
+    "protocol": "x402",
+    "version": 2,
+    "scheme": "exact",
+    "network": "eip155:8453",
+    "asset": "Base USDC",
+    "amount_usdc": 0.001,
+    "paid_http_status": 200,
+    "settlement_observed": true,
+    "transaction": "0x241358fc7223a80fd2803bb49438a47da684ab01b49afc5a0a99736c74fdffca"
+  },
+  "fulfilment_validation": {
+    "expected": {
+      "foo": "bar",
+      "broken": true
+    },
+    "observed": {
+      "foo": "bar",
+      "broken": true
+    },
+    "response_envelope": "value",
+    "exact_semantic_match": true,
+    "valid": true
+  },
+  "proof3_complete": true,
+  "interpretation": {
+    "supports": "A bounded Atinamos-operated buyer independently discovered external sellers, consulted published evidence, applied its own policy, selected a seller without human seller selection, paid and exactly validated the purchased result.",
+    "does_not_support": [
+      "Permanent provider reliability",
+      "A universal safe or unsafe verdict",
+      "Unrelated external-agent adoption of Atinamos",
+      "Guaranteed future success for the selected endpoint"
+    ]
+  },
+  "sanitisation": {
+    "buyer_wallet_identity_omitted": true,
+    "payment_recipient_account_omitted": true,
+    "credentials_omitted": true,
+    "internal_infrastructure_omitted": true,
+    "operational_source_code_omitted": true,
+    "unpublished_test_generation_details_omitted": true
+  }
+}
