@@ -70,6 +70,39 @@ The final buyer selected Keyronne JSON Repair, paid 0.001 USDC on Base and exact
 
 This supports the controlled Atinamos autonomous-buyer sequence. It does not establish unrelated external-agent adoption, permanent seller reliability or a universal trust verdict.
 
+## External market-adoption milestone — first confirmed commercial purchase
+
+Later on 28 August 2026, Atinamos observed an unrelated external client complete a paid x402 purchase of **Atinamos JSON Repair**.
+
+The retained evidence records:
+
+```text
+external POST /agent/json-repair → 402 Payment Required
+→ Coinbase x402 verify → 200 OK
+→ Coinbase x402 settle → 200 OK
+→ paid POST /agent/json-repair → 200 OK
+→ 0.005 USDC Base settlement observed
+```
+
+Transaction:
+
+```text
+0x00482f136e90f01053699dd6c48b8c0e6e7f0b3598510c83654a1b77a562316b
+```
+
+The event was checked against the documented controlled Atinamos buyer/test flows and was not identified as one of them. The public record redacts the external source IP and omits Atinamos payment-recipient account details.
+
+- [Research note](research/2026-08-28-first-external-commercial-purchase.md)
+- [Sanitised experiment record](experiments/2026-08-28-external-json-repair-purchase/README.md)
+- [Sanitised machine-readable evidence](experiments/2026-08-28-external-json-repair-purchase/public-evidence.json)
+- Human-readable research: `https://verify.atinamos.co.uk/research/first-external-commercial-purchase/`
+
+**Supports:** confirmed external commercial use of an Atinamos paid service, successful x402 verification and settlement, and successful HTTP fulfilment.
+
+**Does not support:** that the external buyer was definitely an independently autonomous AI agent, that an AI system made the procurement decision, or that a particular marketplace caused the purchase.
+
+This milestone is intentionally kept outside the direct-verification provider table because it is a **market-adoption observation about Atinamos itself**, not an Atinamos verification classification of its own service.
+
 ## Interpretation and format
 
 - [Evidence & Classification Methodology v1.0](methodology/evidence-and-classification.md)
