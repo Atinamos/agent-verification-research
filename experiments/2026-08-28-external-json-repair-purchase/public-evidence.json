@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "evidence_type": "market_adoption_observation",
+  "classification": "confirmed_external_commercial_purchase",
+  "observed_at": "2026-08-28T16:17:11Z",
+  "service": {
+    "provider": "Atinamos",
+    "name": "JSON Repair",
+    "route": "/agent/json-repair"
+  },
+  "payment": {
+    "protocol": "x402",
+    "network": "eip155:8453",
+    "asset": "USDC",
+    "amount_usdc": 0.005,
+    "transaction_hash": "0x00482f136e90f01053699dd6c48b8c0e6e7f0b3598510c83654a1b77a562316b",
+    "block_number": 50572244,
+    "transaction_status": "success"
+  },
+  "observations": [
+    {
+      "timestamp": "2026-08-28T16:17:11.481371147Z",
+      "event": "paid_route_request",
+      "http_status": 402
+    },
+    {
+      "timestamp": "2026-08-28T16:17:12.429690532Z",
+      "event": "x402_verify",
+      "provider": "Coinbase CDP",
+      "http_status": 200
+    },
+    {
+      "timestamp": "2026-08-28T16:17:13.610008425Z",
+      "event": "x402_settle",
+      "provider": "Coinbase CDP",
+      "http_status": 200
+    },
+    {
+      "timestamp": "2026-08-28T16:17:13.850109772Z",
+      "event": "paid_service_fulfilment",
+      "http_status": 200
+    }
+  ],
+  "externality_assessment": {
+    "controlled_test_identified": false,
+    "payer_matched_documented_atinamos_test_wallet": false,
+    "source_ip_published": false,
+    "source_ip_redaction_reason": "Unnecessary for public verification of the commercial event"
+  },
+  "supports": [
+    "external commercial use of an Atinamos paid service",
+    "successful x402 verification",
+    "successful x402 settlement",
+    "successful paid HTTP fulfilment",
+    "0.005 USDC Base settlement observed"
+  ],
+  "does_not_support": [
+    "independently autonomous AI-agent identity",
+    "AI decision provenance",
+    "specific marketplace attribution",
+    "broad market adoption",
+    "future service reliability"
+  ],
+  "publication_boundary": {
+    "source_ip": "redacted",
+    "payment_recipient_account_details": "omitted",
+    "private_runtime_configuration": "omitted"
+  }
+}
