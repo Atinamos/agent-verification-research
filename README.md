@@ -15,6 +15,32 @@ It exists to publish selected, sanitised material that helps developers, researc
 
 Atinamos produces evidence. Trust is the conclusion the buyer reaches from that evidence.
 
+## Proof #3 — autonomous buyer milestone
+
+**COMPLETE — 28 August 2026.**
+
+An Atinamos-operated bounded buyer was given a task, a maximum spend and a risk policy. It independently searched Coinbase/x402 Bazaar, checked exact invocation-route viability, queried already-published Atinamos evidence, applied its own procurement policy, selected an external seller without a human naming the seller, made a bounded x402 payment, consumed the result and exactly validated the purchased output.
+
+Final clean run:
+
+```text
+selected seller: Keyronne JSON Repair
+payment: 0.001 USDC on Base
+x402: v2 / exact
+paid HTTP status: 200
+settlement: observed successful
+output: exact semantic match
+proof3_complete: true
+```
+
+The research record deliberately retains the earlier autonomous no-purchase, route-identity issue and first paid validator-envelope failure rather than presenting only the final successful run.
+
+- [Proof #3 public research note](research/2026-08-28-proof3-autonomous-buyer.md)
+- [Proof #3 experiment record](experiments/2026-08-28-proof3-autonomous-buyer/README.md)
+- [Sanitised final buyer receipt](experiments/2026-08-28-proof3-autonomous-buyer/public-receipt.json)
+
+This proves the controlled Atinamos buyer experiment. It does **not** prove unrelated external-agent adoption of Atinamos, a universal safe/unsafe verdict or permanent provider reliability.
+
 ## Public evidence index
 
 - [Atinamos Public Evidence Index](EVIDENCE_INDEX.md) — one place to review the currently published direct verification observations, classifications, study links and technical receipts.
@@ -55,6 +81,12 @@ The private PostgreSQL database remains private. The public Verify deployment re
 - [Public Verification Receipt v1 JSON Schema](schemas/verification-receipt-v1.schema.json) — machine-readable receipt contract.
 
 ## Public research notes
+
+### 28 August 2026 — Proof #3 Autonomous Buyer
+
+A controlled buyer experiment completed the full external-discovery → evidence → policy → selection → payment → fulfilment-validation sequence without a human naming the seller. The same research trail also exposed useful failure modes: autonomous no-purchase when evidence was absent, endpoint transcription/identity drift, marketplace routes returning 404/405, live price drift, paid-but-invalid fulfilment, and a buyer-side validator-envelope defect that was fixed and rerun rather than hidden.
+
+- [Proof #3 — A Bounded Autonomous Buyer With External Discovery](research/2026-08-28-proof3-autonomous-buyer.md)
 
 ### 24 August 2026 — Machine-Service Market Snapshot
 
