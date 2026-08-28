@@ -96,11 +96,26 @@ json-repair          0.005 USDC
 technical-seo-crawl  0.05 USDC
 ```
 
-## Coinbase Bazaar status at the recorded check
+## Coinbase Bazaar discovery
 
-A read-only Coinbase Bazaar discovery query performed shortly after the first settled Technical SEO transaction returned `FOUND: NO` for this exact endpoint.
+The first read-only Coinbase Bazaar discovery query shortly after the settled Technical SEO transaction returned `FOUND: NO` for this exact endpoint.
 
-That observation is retained as-is. It does **not** establish that the resource will remain absent. Bazaar discovery is an external indexed/cached surface and should be checked again independently rather than inferred from the successful payment or local catalogue state.
+A later read-only check returned `FOUND: YES` without making any additional payment. The returned listing matched the live contract:
+
+```text
+resource: https://agent.atinamos.co.uk/agent/technical-seo-crawl
+serviceName: Atinamos Technical SEO Crawl
+x402Version: 2
+scheme: exact
+network: eip155:8453
+amount: 50000
+lastUpdated: 2026-08-28T15:29:32.624Z
+tags: technical-seo, seo-audit, website-crawl, site-health, evidence
+```
+
+`50000` is 0.05 USDC in six-decimal USDC base units.
+
+The transition from an initial absence to later presence is recorded as an observation of Coinbase's external discovery surface. It does not establish that a self-purchase is required for indexing, and Bazaar inclusion is not evidence of quality, trust or external demand.
 
 No additional payment was made merely to influence indexing.
 
@@ -117,6 +132,7 @@ live x402 contract
 → completed result
 → public JSON + HTML artifacts
 → exact SHA-256 integrity verification
+→ later Coinbase Bazaar discovery of the exact live resource
 ```
 
 It also supports that Technical SEO Crawl is exposed through the live Atinamos Shop catalogue and MCP catalogue.
@@ -127,7 +143,7 @@ This run does **not** prove:
 
 - unrelated third-party buyer adoption;
 - autonomous external demand for the service;
-- Coinbase Bazaar indexing at the time of the recorded check;
+- that a settled self-purchase is required for Coinbase Bazaar indexing;
 - permanent future availability or performance;
 - an independent Atinamos Verification classification for this Atinamos-owned seller endpoint;
 - a universal trust or quality verdict about the target website.
