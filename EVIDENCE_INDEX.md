@@ -1,12 +1,13 @@
 # Atinamos Public Evidence Index
 
-**Published:** 23 August 2026
+**Published:** 23 August 2026  
+**Updated:** 28 August 2026
 
 > **You can pay to be tested. You cannot pay to be trusted.**
 
 This index links the public technical evidence produced from Atinamos direct verification observations.
 
-Each entry is a timestamped record of one tested machine-service invocation. It is not a permanent provider rating or certification.
+Each direct-verification entry is a timestamped record of one tested machine-service invocation. It is not a permanent provider rating or certification.
 
 | Date | Service | Settlement | Fulfilment | Output validation | Classification |
 | --- | --- | --- | --- | --- | --- |
@@ -44,6 +45,31 @@ Each entry is a timestamped record of one tested machine-service invocation. It 
 
 **Does not support:** that x402engine always returns invalid screenshots or that the provider as a whole is unsafe or untrustworthy.
 
+## Related autonomous-buyer milestone — Proof #3
+
+Proof #3 is intentionally indexed separately from the direct-verification table above because it is a **buyer/procurement experiment**, not another provider-wide verification classification.
+
+On 28 August 2026, an Atinamos-operated buyer completed:
+
+```text
+external marketplace discovery
+→ exact-route non-paying preflight
+→ published Atinamos evidence lookup
+→ buyer-owned procurement policy
+→ autonomous seller selection
+→ bounded x402 payment
+→ seller fulfilment
+→ exact result validation
+```
+
+The final buyer selected Keyronne JSON Repair, paid 0.001 USDC on Base and exactly validated the purchased semantic result. The clean final receipt recorded `proof3_complete = true`.
+
+- [Proof #3 research note](research/2026-08-28-proof3-autonomous-buyer.md)
+- [Proof #3 experiment record](experiments/2026-08-28-proof3-autonomous-buyer/README.md)
+- [Sanitised final buyer receipt](experiments/2026-08-28-proof3-autonomous-buyer/public-receipt.json)
+
+This supports the controlled Atinamos autonomous-buyer sequence. It does not establish unrelated external-agent adoption, permanent seller reliability or a universal trust verdict.
+
 ## Interpretation and format
 
 - [Evidence & Classification Methodology v1.0](methodology/evidence-and-classification.md)
@@ -65,7 +91,7 @@ A later stage is never inferred simply because an earlier stage succeeded.
 
 ## Provenance rule
 
-The three entries above are derived from Atinamos direct verification observations backed by retained internal evidence and sanitised public receipts.
+The direct-verification entries above are derived from Atinamos direct verification observations backed by retained internal evidence and sanitised public receipts.
 
 Material obtained from external registries, marketplaces, payment systems or third-party evidence sources must be labelled as externally sourced and must not be presented as an Atinamos direct observation.
 
