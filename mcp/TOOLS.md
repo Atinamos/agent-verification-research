@@ -65,13 +65,15 @@ This is important: MCP v1 search is not a claim to expose the complete private A
 
 ## `evaluate_policy(endpoint, policy)`
 
-Evaluates the published evidence for a service against procurement rules supplied by the caller.
+Evaluates published Atinamos evidence for a service against procurement rules supplied by the caller.
+
+The shared evaluator prefers published signed Assurance Evidence Receipts when they are available for the endpoint. For older services without signed Assurance receipts, it falls back to the selected legacy published evidence corpus. Private and unpublished records are outside the evaluation.
 
 Input:
 
 ```json
 {
-  "endpoint": "https://api.x402node.dev/ai/json-repair",
+  "endpoint": "https://402utils.com/v1/hash",
   "policy": {
     "require_known": true,
     "minimum_successful_fulfilments": 1,
@@ -95,6 +97,17 @@ The response also returns:
 - `failures` — rules that were not satisfied;
 - `unknowns` — evidence fields that could not be established;
 - the supplied `policy`;
-- the evidence summary used for the evaluation.
+- the evidence summary used for the evaluation;
+- the evidence `scope` used for that evaluation.
 
-`evaluate_policy` is not a universal trust score and is not a purchase instruction.
+`evaluate_policy` is not a universal trust score and is not a purchase instruction. The caller owns the policy and the procurement decision.
+
+### HTTP adapter
+
+MCP remains the primary autonomous-agent integration surface. Developers and non-MCP clients can call the same evaluator through:
+
+```text
+POST https://verify.atinamos.co.uk/v1/assurance/evaluate-policy
+```
+
+The HTTP route delegates to the same policy implementation as the MCP tool; it is not a separate scoring or decision system.
