@@ -1,0 +1,91 @@
+{
+  "evidence_version": "atinamos.external-verification.v1",
+  "provider_name": "Ashlar Blue",
+  "service_name": "Public x402 discovery and assurance surface",
+  "tested_endpoint": "https://ashlar.blue/.well-known/x402",
+  "tested_method": "GET",
+  "started_at": "2026-09-03T07:10:59Z",
+  "completed_at": "2026-09-03T07:55:21Z",
+  "classification": "independent_assurance_partial",
+  "payment_required": false,
+  "payment_authorization_created": false,
+  "payment_request_sent": false,
+  "payment_made": false,
+  "payment_settlement_observed": false,
+  "initial_http_status": 200,
+  "paid_http_status": null,
+  "fulfilment_observed": null,
+  "output_valid": null,
+  "payment": {
+    "amount_microunits": null,
+    "network": null,
+    "scheme": null,
+    "version": null,
+    "transaction": null
+  },
+  "assertions": [
+    {
+      "name": "x402_dns_discovery_present",
+      "passed": true,
+      "observed": "_x402.ashlar.blue published v=x402-1 with wk=https://ashlar.blue/.well-known/x402"
+    },
+    {
+      "name": "well_known_manifest_machine_readable",
+      "passed": true,
+      "observed": "HTTP 200 JSON manifest advertised facilitator baseUrl https://ashlar.blue/api"
+    },
+    {
+      "name": "live_supported_machine_readable",
+      "passed": false,
+      "observed": "https://ashlar.blue/api/supported returned website HTML; Ashlar SDK resolveX402 reported liveCheck=unreachable"
+    },
+    {
+      "name": "advertised_mcp_endpoint_operational",
+      "passed": false,
+      "observed": "GET returned website HTML; JSON-RPC POST initialize returned HTTP 405"
+    },
+    {
+      "name": "current_attestation_independently_checkable",
+      "passed": false,
+      "observed": "Ashlar SDK resolveX402 reported attestationUsable=false"
+    },
+    {
+      "name": "raw_intel_tdx_quote_independently_verified",
+      "passed": false,
+      "observed": "No public raw quote/collateral verification path was reached in the tested surfaces"
+    },
+    {
+      "name": "x402ev1_implementation_present",
+      "passed": true,
+      "observed": "@ashlar-blue/x402-trust 0.5.2 implements x402ev/1 evidence references"
+    }
+  ],
+  "contract_anomalies": [
+    "api.ashlar.blue returned DNS NXDOMAIN from the Atinamos test environment",
+    "manifest-derived /api/supported returned public website HTML instead of facilitator kinds JSON",
+    "Ashlar's own published resolveX402() returned liveCheck=unreachable",
+    "published MCP endpoint did not accept the tested JSON-RPC initialize POST and returned HTTP 405",
+    "live manifest did not expose a top-level independently-checkable attestation block expected by the published resolver",
+    "documented historical badge lookup requires r.manifest.badges.subject, but the observed live manifest had no badges block",
+    "Ops Re-Verify All Quotes UI was implemented as a timer-driven presentation action without observable quote verification",
+    "Developer Lab cryptographic audit was explicitly implemented as Sandbox Audit Simulator Logic",
+    "published x402_verify_attestation_entry MCP handler verified Merkle inclusion rather than raw Intel TDX quote validity"
+  ],
+  "response_hash": null,
+  "publication_provenance": {
+    "basis": "independent_external_assurance_test",
+    "invited_by_provider": true,
+    "provider_invitation_influenced_result": false,
+    "paid_test_evidence_basis": null,
+    "transaction_hash_available_in_export_source": false,
+    "npm_package": "@ashlar-blue/x402-trust@0.5.2",
+    "npm_archive_sha256": "81129897dc41171c01ab8766317761a3e4bdcb951c7b09f71f9432b497188f1a"
+  },
+  "limitations": [
+    "No payment was made because a paid-service transaction was not required by the provider's invitation tested here.",
+    "The observation does not prove that Ashlar lacks private, unpublished or alternate facilitator or TDX infrastructure.",
+    "A live x402ev/1 evidence artifact suitable for independent digest recomputation was not located through the tested public path.",
+    "The end of the observation window records the last explicitly timestamped terminal observation retained in this test."
+  ],
+  "conclusion": "Ashlar Blue publishes meaningful x402 discovery and evidence-verification architecture, but the public deployment observed on 2026-09-03 did not provide Atinamos with a complete reproducible path to several of its strongest live facilitator and Intel TDX assurance claims."
+}
