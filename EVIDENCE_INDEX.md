@@ -7,7 +7,7 @@
 
 This index links the public technical evidence produced from Atinamos direct verification observations.
 
-Each direct-verification entry is a timestamped record of one tested machine-service invocation. It is not a permanent provider rating or certification.
+Each direct-verification entry is a timestamped record of tested machine-service behaviour. It is not a permanent provider rating or certification.
 
 | Date | Service | Settlement | Fulfilment | Output validation | Classification |
 | --- | --- | --- | --- | --- | --- |
@@ -15,43 +15,90 @@ Each direct-verification entry is a timestamped record of one tested machine-ser
 | 22 Aug 2026 | x402.direct — Service Directory Search | no 0.001 USDC settlement observed after authorised paid-path failure | not observed; HTTP 500 | not reached | `pre_settlement_paid_path_failure` |
 | 22 Aug 2026 | x402engine — Web Screenshot | 0.01 USDC observed | observed; HTTP 200 | screenshot artefact failed strict base64/PNG validation | `settled_fulfilment_contract_invalid` |
 
-## Active assurance test — code402 LEI Check
+## Completed assurance series — code402 LEI Check
 
-Phase 1 was completed on 3 September 2026 with **no payment made**.
-
-Atinamos independently observed:
+On 3 September 2026 Atinamos completed a four-observation assurance series for:
 
 ```text
 POST https://code402.dev/v1/tools/lei-check/call
-HTTP 402
-header x402Version: 2
-scheme: exact
-network: eip155:8453
-amount: 999 atomic USDC
-asset: 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913
-recipient: 0xc59c85e661d34084a7769f955d17fd38254a6235
-timeout: 300 seconds
 ```
 
-A preceding free-tier response stated:
+Current live evidence summary:
 
 ```text
-scope: structure+checksum only
+observations: 4
+paid tests: 2
+successful fulfilments: 2
+failed fulfilments: 0
+payment interoperability issues: 1
 ```
 
-and included an XDR-1 receipt. Receipt-signature verification and paid fulfilment remain pending.
+### Contract and scope
 
-- [Technical experiment record](experiments/2026-09-03-code402-lei-check/README.md)
-- [Machine-readable Phase-1 evidence](experiments/2026-09-03-code402-lei-check/evidence.json)
+The authoritative pre-payment observation recorded x402 v2 in the payment header, `exact`, Base `eip155:8453`, 999 atomic USDC at that time, Base USDC asset `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`, recipient `0xc59c85e661d34084a7769f955d17fd38254a6235` and a 300-second timeout.
+
+The service result scope remained:
+
+```text
+structure+checksum only
+```
+
+No registry-existence claim is inferred.
+
+### Two settled deterministic paid controls
+
+Atinamos independently precomputed:
+
+```text
+529900T8BM49AURSDO55 → MOD-97 remainder 1 → expected valid=true
+529900T8BM49AURSDO56 → MOD-97 remainder 2 → expected valid=false
+```
+
+The first EOA purchase settled **999 atomic USDC** on Base and returned `valid=true` as expected.
+
+Transaction:
+
+```text
+0xf0213ebd5c8fcbe8fc41d03663cf6c2b5043117b361d523b41d821a1b98ae64b
+```
+
+The second EOA purchase was authorised up to **1391 atomic USDC**; dynamic pricing decayed before settlement and **1371 atomic USDC** settled. The service returned `valid=false` / `checksum failed` as independently expected.
+
+Transaction:
+
+```text
+0x5fe5fb57fa4e19cddc82c5c728e0eda5d110d41f9afd5d436a52f1a39c16d40c
+```
+
+For both paid controls, the XDR-1 receipt signature independently recovered to the published signer and the receipt input/output hashes matched the exact tested input and returned result.
+
+### Circle smart-account interoperability observation
+
+A separate Circle smart-contract buyer submitted a 999-atomic-USDC authorization. code402 rejected it before settlement with `BAD_SIGNATURE`, reporting that the voucher signature did not recover to the declared `from` address.
+
+Atinamos independently checked the exact authorization against the buyer contract. EIP-1271 `isValidSignature` returned the magic value `0x1626ba7e`, while Base USDC authorization state for the exact nonce remained unused.
+
+The current Evidence API classifies this specifically as:
+
+```text
+pre_settlement_payment_interoperability_failure
+```
+
+This is not counted as a failed fulfilment because settlement and paid fulfilment were never reached. It does not establish that the Circle signature was invalid or that code402 is universally incompatible with smart accounts.
+
+### Retained receipt limitation
+
+The paid XDR-1 receipt signatures were independently verified, but the accompanying seller-wallet authorization object contained an empty `attestation_sig`. Atinamos therefore does not claim to have independently cryptographically verified seller-wallet delegation to the receipt signer.
+
+- [Completed technical experiment record](experiments/2026-09-03-code402-lei-check/README.md)
+- [Completed machine-readable evidence series](experiments/2026-09-03-code402-lei-check/evidence.json)
+- [Original preserved Phase-1 evidence](experiments/2026-09-03-code402-lei-check/evidence-phase1.json)
 - Human-readable study: `https://verify.atinamos.co.uk/studies/study-code402-lei-check/`
+- Live evidence: `https://verify.atinamos.co.uk/v1/evidence?endpoint=https%3A%2F%2Fcode402.dev%2Fv1%2Ftools%2Flei-check%2Fcall&method=POST`
 
-**Classification:** `payment_contract_observed`
+**Supports:** the exact timestamped contract observation, two settled deterministic paid EOA controls with independently verified outputs and receipt binding, plus the observed Circle smart-account pre-settlement interoperability issue.
 
-**Supports:** this exact live payment contract and scope representation were independently observed at the stated time.
-
-**Does not support:** paid settlement, paid fulfilment, independently verified checksum correctness, verified XDR-1 authenticity or permanent trustworthiness.
-
-This active pre-payment record is intentionally not inserted into the completed paid-verification table above.
+**Does not support:** LEI registry existence, permanent reliability, provider-wide trustworthiness, universal smart-account incompatibility or a universal purchase recommendation.
 
 ## x402Node — JSON Repair
 
@@ -162,7 +209,7 @@ A later stage is never inferred simply because an earlier stage succeeded.
 
 ## Provenance rule
 
-The completed direct-verification entries above are derived from Atinamos direct verification observations backed by retained internal evidence and sanitised public receipts. The code402 Phase-1 entry is also a direct observation, but is explicitly marked as pre-payment evidence until later stages are completed.
+The direct-verification entries above are derived from Atinamos observations backed by retained internal evidence and sanitised public records. The code402 section is an evidence series rather than a single invocation and intentionally preserves both successful and problematic observations.
 
 Material obtained from external registries, marketplaces, payment systems or third-party evidence sources must be labelled as externally sourced and must not be presented as an Atinamos direct observation.
 
