@@ -6,7 +6,7 @@ Only experiments that have been reviewed for public release belong here. Interna
 
 ## Published experiments
 
-- [3 Sep 2026 — code402 LEI Check](2026-09-03-code402-lei-check/README.md) — Phase 1 independently observed request shape, free-tier scope and authoritative x402 payment contract. **PAID FULFILMENT PENDING.**
+- [3 Sep 2026 — code402 LEI Check](2026-09-03-code402-lei-check/README.md) — four-observation assurance series: live payment contract retained; two bounded EOA purchases settled and matched independent positive/negative checksum expectations; both paid XDR-1 receipt signatures and exact input/output binding verified; one Circle smart-account authorization validated under EIP-1271 but was rejected before settlement by the observed payment path. **COMPLETE FOR TESTED LEI SCOPE.**
 - [3 Sep 2026 — Ashlar Blue Independent Assurance](2026-09-03-ashlar-blue-independent-assurance/README.md) — public discovery and assurance claims independently inspected; several stronger live claims were not reproducible through the observed public path.
 - [28 Aug 2026 — Proof #3 Autonomous Buyer](2026-08-28-proof3-autonomous-buyer/README.md) — external marketplace discovery → exact-route preflight → published Atinamos evidence → buyer policy → autonomous seller selection → bounded x402 payment → exact result validation. **COMPLETE.**
 - [22 Aug 2026 — x402Node JSON Repair](2026-08-22-x402node-json-repair/README.md) — settled paid fulfilment with published output assertions.
