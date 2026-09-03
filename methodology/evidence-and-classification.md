@@ -2,7 +2,8 @@
 
 **Status:** Public methodology  
 **Version:** 1.0  
-**Published:** 23 August 2026
+**Published:** 23 August 2026  
+**Updated:** 3 September 2026
 
 > **You can pay to be tested. You cannot pay to be trusted.**
 
@@ -93,6 +94,12 @@ Atinamos records assertion outcomes rather than converting them into a broad jud
 
 The classification describes the observed execution state of one timestamped verification. It is not a permanent provider rating.
 
+### `payment_contract_observed`
+
+Evidence supports that Atinamos independently captured and parsed a live payment requirement for the service route.
+
+This classification does **not** mean a valid payment authorisation was created, payment settled, paid fulfilment occurred or the service output was correct. It is deliberately useful as a pre-payment evidence state so a buyer can distinguish **"we observed the contract"** from **"we paid and verified fulfilment"**.
+
 ### `settled_fulfilment_valid`
 
 Evidence supports that:
@@ -159,15 +166,16 @@ Those are buyer decisions, not Atinamos trust verdicts.
 
 ## Public examples
 
-The first three published studies demonstrate three different execution states:
+Published studies demonstrate different evidence stages and execution states:
 
 | Observation | Settlement | Fulfilment | Output validation | Classification |
 | --- | --- | --- | --- | --- |
+| code402 LEI Check — 3 Sep 2026 Phase 1 | not attempted | paid fulfilment not tested | not yet tested | `payment_contract_observed` |
 | x402Node JSON Repair — 22 Aug 2026 | observed | observed | valid | `settled_fulfilment_valid` |
 | x402.direct Search — 22 Aug 2026 | not observed | not observed | not reached | `pre_settlement_paid_path_failure` |
 | x402engine Web Screenshot — 22 Aug 2026 | observed | observed | invalid | `settled_fulfilment_contract_invalid` |
 
-The associated public receipts and experiment records are available in this repository under `experiments/`.
+The associated public evidence and experiment records are available in this repository under `experiments/`.
 
 ## Methodology limits
 
