@@ -4,201 +4,251 @@
 **Provider:** code402  
 **Service:** LEI Check  
 **Endpoint:** `POST https://code402.dev/v1/tools/lei-check/call`  
-**Payment made:** No  
-**Status:** Phase 1 complete — paid fulfilment pending  
-**Classification:** `payment_contract_observed`
+**Status:** completed assurance series for the tested LEI scope
 
 ## Independence statement
 
 DRJ invited Atinamos to test code402 and explicitly welcomed publication of successes or failures.
 
-The invitation did not alter the test method, evidence threshold or result. It is not presented as endorsement.
+The invitation did not alter the test method, evidence threshold or result. It is recorded as provenance, not endorsement.
 
 ## Core result
 
-Atinamos independently established the live REST request envelope, observed a correctly scoped free-tier response, inspected current health and x402 discovery metadata, forced the payment-validation path without authorising payment, and then obtained a genuine unsigned HTTP 402 payment challenge after the free-tier allowance was exhausted.
-
-No valid payment authorisation was created and no USDC was spent during Phase 1.
-
-The strongest current conclusion is therefore:
-
-> **payment contract observed; paid fulfilment evidence pending**
-
-## Timestamped observations
-
-### 2026-09-03T08:33:10Z — request shape
-
-An unwrapped POST body returned:
+The completed series contains four distinct observations:
 
 ```text
-HTTP 400
-INPUT_SCHEMA_INVALID
-expected { "input": { … } }
+1 × payment contract observation
+1 × Circle smart-account pre-settlement interoperability issue
+2 × settled paid EOA controls with independently validated outputs
 ```
 
-The live REST call therefore required the outer `input` wrapper.
-
-### 2026-09-03T08:33:48Z — free-tier fulfilment
-
-A correctly formed request returned HTTP 200 and:
-
-```json
-{
-  "valid": true,
-  "normalized": "5493001KJTIIGC8Y1R12",
-  "reason": "checksum valid",
-  "scope": "structure+checksum only"
-}
-```
-
-The response reported `tier: free` and `settled: false`.
-
-An XDR-1 receipt was present. Its signature has **not** yet been independently verified. A client-identifying free-tier payer value is deliberately omitted from this public record.
-
-The returned checksum result will also be independently recomputed later rather than accepted as proof of its own correctness.
-
-### Current health
-
-The live `/health` surface reported:
+Current buyer-facing summary:
 
 ```text
-lei-check price: 999 atomic USDC
-pricing mode: dynamic-dutch
-receipt signer: 0xa036e2e3e19c6d02f30b3a9eb0acd057e6d9a5c8
+observations: 4
+paid tests: 2
+successful fulfilments: 2
+failed fulfilments: 0
+payment interoperability issues: 1
 ```
 
-### Current x402 manifest
+The interoperability issue is deliberately not counted as a failed fulfilment because no settlement occurred and paid fulfilment was never reached.
 
-`/.well-known/x402.json` advertised for the exact route:
+## Service scope
 
-```text
-scheme: exact
-network: eip155:8453
-amount: 999
-asset: 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913
-payTo: 0xc59c85e661d34084a7769f955d17fd38254a6235
-maxTimeoutSeconds: 300
-authorization: TransferWithAuthorization (EIP-3009)
-signature: EIP-712
-free tier: 20 calls/day per client
-```
-
-The manifest also reported top-level `x402_version: 1`.
-
-### Payment-validation path
-
-A deliberately empty payment object was rejected:
-
-```text
-HTTP 402
-MALFORMED_PAYMENT
-```
-
-That probe contained no usable authorisation or signature and could not transfer funds.
-
-### 2026-09-03T08:50:49Z — genuine payment challenge
-
-After free-tier exhaustion, an unsigned request returned HTTP 402.
-
-The `payment-options` header advertised:
-
-```json
-[
-  {
-    "x402Version": 2,
-    "scheme": "exact",
-    "network": "eip155:8453"
-  }
-]
-```
-
-The decoded `payment-required` header contained:
-
-```text
-x402Version: 2
-scheme: exact
-network: eip155:8453
-amount: 999
-payTo: 0xc59c85e661d34084a7769f955d17fd38254a6235
-maxTimeoutSeconds: 300
-asset: 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913
-```
-
-The compatibility JSON body simultaneously exposed:
-
-```text
-x402Version: 1
-network: base
-scheme: eip3009
-chain_id: 8453
-challenge_ttl_seconds: 300
-free_tier_remaining: 0
-```
-
-This dual representation is recorded, but is **not** currently classified as a defect.
-
-## Scope observation
-
-The free result stated:
+Every tested result retained:
 
 ```text
 scope: structure+checksum only
 ```
 
-That is an important limitation. The observation does not support interpreting a checksum-valid result as proof that the entity exists in a live LEI registry.
+The service validates LEI structure and ISO 7064 MOD-97-10 checksum. This record does **not** establish that a checksum-valid LEI exists in a live registry or belongs to a particular entity.
 
-## Current payment contract
+## Phase 1 — payment contract
 
-| Field | Observed |
-| --- | --- |
-| Header x402 version | 2 |
-| Scheme | exact |
-| Network | `eip155:8453` |
-| Amount | `999` atomic USDC |
-| Asset | `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913` |
-| Recipient | `0xc59c85e661d34084a7769f955d17fd38254a6235` |
-| Timeout | 300 seconds |
-| Payment authorisation | EIP-3009 |
-| Signature scheme | EIP-712 |
+An initial schema probe established that the live REST route required an outer `input` object.
+
+After free-tier exhaustion, an unsigned request returned HTTP 402 at `2026-09-03T08:50:49Z` with:
+
+```text
+x402Version: 2
+scheme: exact
+network: eip155:8453
+amount: 999 atomic USDC
+asset: 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913
+recipient: 0xc59c85e661d34084a7769f955d17fd38254a6235
+timeout: 300 seconds
+authorization: EIP-3009 TransferWithAuthorization
+payment signature: EIP-712
+```
+
+The compatibility JSON body also exposed x402 v1 / `base`. Atinamos records that as a dual representation observed, not as a defect in itself.
+
+The original Phase-1 machine record is preserved as [`evidence-phase1.json`](evidence-phase1.json).
+
+## Independently predetermined fixtures
+
+Before the paid result was accepted, Atinamos independently calculated:
+
+```text
+529900T8BM49AURSDO55 → MOD-97 remainder 1 → expected valid=true
+529900T8BM49AURSDO56 → MOD-97 remainder 2 → expected valid=false
+```
+
+A malformed 19-character fixture was prepared during planning but was not exercised on the paid path and is not claimed as a paid result.
+
+## Circle smart-account observation
+
+A Circle buyer at:
+
+```text
+0xe03ce3a34913f1a2245854fca79e4fbba789e10c
+```
+
+was confirmed to be a deployed smart-contract account on Base.
+
+A 999-atomic-USDC authorization was created and submitted. code402 returned HTTP 402:
+
+```text
+BAD_SIGNATURE
+voucher signature does not recover to `from`
+```
+
+Atinamos independently checked the exact authorization. Ordinary EOA recovery did not recover the smart-account address, but EIP-1271 `isValidSignature` returned the magic value:
+
+```text
+0x1626ba7e
+```
+
+for the exact EIP-712 digest. Base USDC `authorizationState` for the exact buyer and nonce remained unused.
+
+The narrow conclusion is therefore:
+
+> **The observed Circle smart-account authorization independently validated under EIP-1271, but code402 rejected it before settlement because the payment path required ordinary signature recovery to the smart-account `from` address.**
+
+This does not support claiming that the Circle signature itself was invalid or that code402 is universally incompatible with smart accounts.
+
+## Paid positive control
+
+Input:
+
+```text
+529900T8BM49AURSDO55
+```
+
+Observed result:
+
+```text
+valid: true
+reason: checksum valid
+scope: structure+checksum only
+```
+
+This matched the independent expectation.
+
+Settlement:
+
+```text
+999 atomic USDC / 0.000999 USDC
+transaction: 0xf0213ebd5c8fcbe8fc41d03663cf6c2b5043117b361d523b41d821a1b98ae64b
+block: 50821506
+status: 1
+```
+
+The paid XDR-1 receipt independently recovered to published signer:
+
+```text
+0xa036e2e3e19c6d02f30b3a9eb0acd057e6d9a5c8
+```
+
+and its input/output hashes matched the exact paid input and returned result.
+
+## Paid negative control
+
+Input:
+
+```text
+529900T8BM49AURSDO56
+```
+
+Observed result:
+
+```text
+valid: false
+reason: checksum failed
+scope: structure+checksum only
+```
+
+This matched the independent expectation.
+
+The fresh preflight quote was 1391 atomic USDC and the buyer authorised that as the maximum. Dynamic pricing decayed before settlement, so the actual payment was:
+
+```text
+1371 atomic USDC / 0.001371 USDC
+transaction: 0x5fe5fb57fa4e19cddc82c5c728e0eda5d110d41f9afd5d436a52f1a39c16d40c
+block: 50821772
+status: 1
+```
+
+The second XDR-1 receipt independently recovered to the same published signer, and its exact input/output hashes matched.
+
+`output_valid=true` for this negative control means the service correctly reported the intentionally checksum-invalid LEI as invalid.
+
+## Successful spend and dynamic pricing
+
+Successful settled spend:
+
+```text
+999 + 1371 = 2370 atomic USDC = 0.002370 USDC
+```
+
+The Circle smart-account attempt settled zero.
+
+Observed dynamic-price sequence:
+
+```text
+999 → fresh quote 1391 → actual second settlement 1371 atomic USDC
+```
+
+Price is retained as a timestamped observation rather than treated as a permanent contract field.
+
+## XDR-1 limitation retained
+
+Both paid XDR-1 receipt signatures were independently verified. However, the accompanying receipt-signer authorization object contained:
+
+```text
+attestation_sig: ""
+```
+
+The documentation describes that attestation as seller-wallet authorization of the receipt signer. Because the signature was empty, Atinamos did not independently cryptographically establish that seller-wallet delegation.
+
+The receipt input/output hash binding was reproducible using compact JSON. The public metadata does not fully specify the JSON canonicalization rule, and output field order affected the reproduced output hash.
 
 ## What this supports
 
-This Phase-1 record supports that Atinamos independently observed:
+For these timestamped observations:
 
-- a reachable live service;
-- the required REST request envelope;
-- narrow structure/checksum scope;
-- current machine-readable payment terms;
-- a genuine HTTP 402 payment challenge;
-- free-tier receipt issuance;
-- payment-path rejection of malformed payment material.
+- the exact payment contract was machine readable;
+- two bounded EOA purchases settled on Base;
+- the positive and negative paid results matched independent checksum expectations;
+- both paid XDR-1 receipt signatures recovered to the published signer;
+- both paid receipts bound the exact tested input and returned output;
+- one Circle smart-account authorization independently validated under EIP-1271 but was rejected before settlement by the observed payment path.
 
 ## What this does not support
 
-This Phase-1 record does not establish:
+This record does not establish:
 
-- paid settlement;
-- paid fulfilment;
-- correctness of the LEI result under an independent checksum implementation;
-- offline verification of the XDR-1 receipt signature;
 - LEI registry existence;
 - permanent reliability;
-- provider-wide trustworthiness.
+- provider-wide trustworthiness;
+- universal smart-account incompatibility;
+- invalidity of the Circle-created signature;
+- failed fulfilment on the Circle path;
+- seller-wallet delegation to the receipt signer while the attestation signature is empty;
+- a paid malformed-length result;
+- a universal purchase recommendation.
 
 ## Machine-readable evidence
 
-See [`evidence.json`](evidence.json).
+The completed sanitised series is in [`evidence.json`](evidence.json).
 
-The same sanitised observation is copied into the Atinamos Verification public evidence corpus so buyer agents can retrieve it through:
+The current live buyer-facing evidence is available through:
 
 ```text
-GET https://verify.atinamos.co.uk/v1/trust?endpoint=https://code402.dev/v1/tools/lei-check/call
+GET https://verify.atinamos.co.uk/v1/evidence?endpoint=https%3A%2F%2Fcode402.dev%2Fv1%2Ftools%2Flei-check%2Fcall&method=POST
 ```
 
-## Next work
+Human-readable study:
 
-The assurance test will next inspect the documented LEI algorithm, independently construct deterministic valid/invalid test cases, and only then proceed to a bounded paid call after explicit approval.
+```text
+https://verify.atinamos.co.uk/studies/study-code402-lei-check/
+```
 
-The paid result and XDR-1 signature verification will be appended to this same record rather than erasing the Phase-1 history.
+## Conclusion
+
+> **Two bounded EOA purchases settled and returned the independently expected positive and negative LEI checksum results, with independently verified XDR-1 receipt signatures and input/output binding. A separate Circle smart-account authorization independently validated under EIP-1271 but was rejected before settlement by the observed code402 payment path.**
+
+That is evidence about the tested observations, not permanent trust.
 
 **You can pay to be tested. You cannot pay to be trusted.**
