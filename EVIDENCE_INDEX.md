@@ -1,7 +1,7 @@
 # Atinamos Public Evidence Index
 
 **Published:** 23 August 2026  
-**Updated:** 28 August 2026
+**Updated:** 3 September 2026
 
 > **You can pay to be tested. You cannot pay to be trusted.**
 
@@ -14,6 +14,44 @@ Each direct-verification entry is a timestamped record of one tested machine-ser
 | 22 Aug 2026 | x402Node — JSON Repair | 0.006 USDC observed | observed | 4/4 assertions passed | `settled_fulfilment_valid` |
 | 22 Aug 2026 | x402.direct — Service Directory Search | no 0.001 USDC settlement observed after authorised paid-path failure | not observed; HTTP 500 | not reached | `pre_settlement_paid_path_failure` |
 | 22 Aug 2026 | x402engine — Web Screenshot | 0.01 USDC observed | observed; HTTP 200 | screenshot artefact failed strict base64/PNG validation | `settled_fulfilment_contract_invalid` |
+
+## Active assurance test — code402 LEI Check
+
+Phase 1 was completed on 3 September 2026 with **no payment made**.
+
+Atinamos independently observed:
+
+```text
+POST https://code402.dev/v1/tools/lei-check/call
+HTTP 402
+header x402Version: 2
+scheme: exact
+network: eip155:8453
+amount: 999 atomic USDC
+asset: 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913
+recipient: 0xc59c85e661d34084a7769f955d17fd38254a6235
+timeout: 300 seconds
+```
+
+A preceding free-tier response stated:
+
+```text
+scope: structure+checksum only
+```
+
+and included an XDR-1 receipt. Receipt-signature verification and paid fulfilment remain pending.
+
+- [Technical experiment record](experiments/2026-09-03-code402-lei-check/README.md)
+- [Machine-readable Phase-1 evidence](experiments/2026-09-03-code402-lei-check/evidence.json)
+- Human-readable study: `https://verify.atinamos.co.uk/studies/study-code402-lei-check/`
+
+**Classification:** `payment_contract_observed`
+
+**Supports:** this exact live payment contract and scope representation were independently observed at the stated time.
+
+**Does not support:** paid settlement, paid fulfilment, independently verified checksum correctness, verified XDR-1 authenticity or permanent trustworthiness.
+
+This active pre-payment record is intentionally not inserted into the completed paid-verification table above.
 
 ## x402Node — JSON Repair
 
@@ -124,7 +162,7 @@ A later stage is never inferred simply because an earlier stage succeeded.
 
 ## Provenance rule
 
-The direct-verification entries above are derived from Atinamos direct verification observations backed by retained internal evidence and sanitised public receipts.
+The completed direct-verification entries above are derived from Atinamos direct verification observations backed by retained internal evidence and sanitised public receipts. The code402 Phase-1 entry is also a direct observation, but is explicitly marked as pre-payment evidence until later stages are completed.
 
 Material obtained from external registries, marketplaces, payment systems or third-party evidence sources must be labelled as externally sourced and must not be presented as an Atinamos direct observation.
 

@@ -1,0 +1,156 @@
+{
+  "evidence_version": "atinamos.external-verification.v1",
+  "experiment": "code402-lei-check-independent-assurance",
+  "provider_name": "code402",
+  "service_name": "LEI Check",
+  "tested_endpoint": "https://code402.dev/v1/tools/lei-check/call",
+  "tested_method": "POST",
+  "started_at": "2026-09-03T08:33:10Z",
+  "completed_at": "2026-09-03T08:50:49Z",
+  "classification": "payment_contract_observed",
+  "payment_required": true,
+  "payment_authorization_created": false,
+  "payment_request_sent": false,
+  "payment_made": false,
+  "payment_settlement_observed": false,
+  "initial_http_status": 402,
+  "paid_http_status": null,
+  "fulfilment_observed": null,
+  "output_valid": null,
+  "payment": {
+    "amount_microunits": 999,
+    "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "network": "eip155:8453",
+    "recipient": "0xc59c85e661d34084a7769f955d17fd38254a6235",
+    "scheme": "exact",
+    "version": "2",
+    "max_timeout_seconds": 300,
+    "authorization_type": "TransferWithAuthorization (EIP-3009)",
+    "signature_scheme": "EIP-712",
+    "transaction": null
+  },
+  "observed_facts": {
+    "schema_probe": {
+      "observed_at": "2026-09-03T08:33:10Z",
+      "http_status": 400,
+      "code": "INPUT_SCHEMA_INVALID",
+      "message": "expected { \"input\": { … } }",
+      "meaning": "The REST call requires an outer input object before service or payment processing."
+    },
+    "free_tier_fulfilment": {
+      "observed_at": "2026-09-03T08:33:48Z",
+      "http_status": 200,
+      "input": {
+        "lei": "5493001KJTIIGC8Y1R12"
+      },
+      "result": {
+        "valid": true,
+        "normalized": "5493001KJTIIGC8Y1R12",
+        "reason": "checksum valid",
+        "scope": "structure+checksum only"
+      },
+      "tier": "free",
+      "settled": false,
+      "settlement_reason": "free tier",
+      "xdr1_receipt_present": true,
+      "receipt_claimed_signer": "0xa036e2e3e19c6d02f30b3a9eb0acd057e6d9a5c8",
+      "receipt_signature_verification": "not_yet_performed",
+      "payer_identifier": "redacted from public evidence"
+    },
+    "health": {
+      "ok": true,
+      "lei_price_microunits": 999,
+      "pricing_mode": "dynamic-dutch",
+      "receipt_signer": "0xa036e2e3e19c6d02f30b3a9eb0acd057e6d9a5c8",
+      "pricing_note": "live price; idle decay to per-tool floor and settled sales can bump price"
+    },
+    "manifest": {
+      "url": "https://code402.dev/.well-known/x402.json",
+      "top_level_x402_version": 1,
+      "scheme": "exact",
+      "network": "eip155:8453",
+      "amount_microunits": 999,
+      "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "recipient": "0xc59c85e661d34084a7769f955d17fd38254a6235",
+      "max_timeout_seconds": 300,
+      "authorization_type": "TransferWithAuthorization (EIP-3009)",
+      "signature_scheme": "EIP-712",
+      "free_tier": "20 calls/day per client",
+      "authoritative_note": "the 402 challenge body is authoritative for recipient, amount, chain, nonce"
+    },
+    "malformed_payment_probe": {
+      "observed_http_status": 402,
+      "code": "MALFORMED_PAYMENT",
+      "payment_authorized": false,
+      "payment_possible_from_probe": false
+    },
+    "paid_challenge": {
+      "observed_at": "2026-09-03T08:50:49Z",
+      "free_tier_remaining": 0,
+      "payment_options_header": {
+        "x402Version": 2,
+        "scheme": "exact",
+        "network": "eip155:8453"
+      },
+      "payment_required_header_decoded": {
+        "x402Version": 2,
+        "scheme": "exact",
+        "network": "eip155:8453",
+        "amount": "999",
+        "payTo": "0xc59c85e661d34084a7769f955d17fd38254a6235",
+        "maxTimeoutSeconds": 300,
+        "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+      },
+      "compatibility_body": {
+        "x402Version": 1,
+        "scheme": "eip3009",
+        "network_in_accepts": "base",
+        "amount": "999",
+        "recipient": "0xc59c85e661d34084a7769f955d17fd38254a6235",
+        "chain_id": 8453,
+        "challenge_ttl_seconds": 300
+      },
+      "resource_description": "Validate a Legal Entity Identifier (ISO 17442 + ISO 7064 MOD-97-10 check digits)."
+    }
+  },
+  "assertions": [
+    {
+      "name": "live_payment_contract_observed",
+      "passed": true,
+      "observed": "Unsigned request after free-tier exhaustion returned HTTP 402 with machine-readable payment requirements."
+    },
+    {
+      "name": "advertised_scope_is_narrow",
+      "passed": true,
+      "observed": "Free result declared scope=structure+checksum only; no registry-existence claim was made."
+    },
+    {
+      "name": "live_price_matches_manifest_at_observation_time",
+      "passed": true,
+      "observed": "Health, manifest and authoritative 402 header challenge each represented 999 atomic USDC."
+    }
+  ],
+  "contract_anomalies": [],
+  "contract_notes": [
+    "The authoritative payment-required header used an x402 v2 envelope and CAIP-2 network eip155:8453, while the compatibility JSON body also exposed x402Version 1 and network base. This is recorded as a dual representation, not classified as a defect.",
+    "The Bazaar manifest example describes the inner tool body {lei: ...}; the live REST route itself required the outer {input: {...}} wrapper.",
+    "No challenge nonce field was observed in the captured payment-required header. No conclusion is drawn at Phase 1 because the payer-generated EIP-3009 authorization has not yet been constructed."
+  ],
+  "response_hash": null,
+  "publication_provenance": {
+    "basis": "independent_external_service_assurance_test",
+    "invited_by_provider": true,
+    "provider_invitation_influenced_result": false,
+    "provider_explicitly_welcomed_failure_publication": true,
+    "paid_test_evidence_basis": null,
+    "transaction_hash_available_in_export_source": false
+  },
+  "limitations": [
+    "No paid request has yet been signed or sent.",
+    "No USDC settlement has yet been attempted or observed.",
+    "The free-tier LEI result has not yet been independently checked against a separately implemented ISO 7064 MOD-97-10 calculation.",
+    "The XDR-1 receipt signature has not yet been independently recovered or verified.",
+    "This Phase 1 record supports the observed payment contract and scope representation only; it is not a paid-fulfilment result or trust rating."
+  ],
+  "conclusion": "Phase 1 independently established the live code402 LEI Check request shape, free-tier behaviour, published payment metadata and an authoritative HTTP 402 payment challenge. Paid fulfilment, deterministic output validation and XDR-1 receipt verification remain pending."
+}
