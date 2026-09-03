@@ -108,6 +108,34 @@ The controlled sample was 10 listings and is not presented as an estimate of the
 
 ## Published evidence
 
+### 3 September 2026 — code402 LEI Check assurance series
+
+Atinamos completed a four-observation independent assurance series for `POST https://code402.dev/v1/tools/lei-check/call`.
+
+The series retained the original payment-contract observation, two bounded EOA purchases whose positive and negative checksum results matched independent ISO 7064 MOD-97-10 expectations, and one Circle smart-account payment-path interoperability observation.
+
+The two EOA purchases settled **999 atomic USDC** and **1371 atomic USDC** on Base. Both paid XDR-1 receipt signatures independently recovered to the published receipt signer, and both receipts' input/output hashes matched the exact paid inputs and returned results.
+
+The Circle smart-account authorization did not settle. It independently validated under EIP-1271, but code402 rejected the request because ordinary signature recovery did not recover to the smart-account `from` address. This is recorded as a pre-settlement payment interoperability issue rather than a failed fulfilment.
+
+Current live evidence summary:
+
+```text
+observations: 4
+paid tests: 2
+successful fulfilments: 2
+failed fulfilments: 0
+payment interoperability issues: 1
+```
+
+- [Completed technical experiment record](experiments/2026-09-03-code402-lei-check/README.md)
+- [Completed machine-readable evidence series](experiments/2026-09-03-code402-lei-check/evidence.json)
+- [Preserved original Phase-1 evidence](experiments/2026-09-03-code402-lei-check/evidence-phase1.json)
+
+**Supports:** these timestamped payment-contract, settlement, deterministic-output, receipt-verification and interoperability observations.
+
+**Does not support:** LEI registry existence, permanent reliability, provider-wide trustworthiness, universal smart-account incompatibility or a universal purchase recommendation.
+
 ### 22 August 2026 — x402Node JSON Repair
 
 Atinamos independently exercised and paid the externally owned x402Node JSON Repair service, observed fulfilment and checked four objective output assertions. All four passed.
