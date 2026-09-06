@@ -1,7 +1,7 @@
 # Atinamos Public Evidence Index
 
 **Published:** 23 August 2026  
-**Updated:** 3 September 2026
+**Updated:** 6 September 2026
 
 > **You can pay to be tested. You cannot pay to be trusted.**
 
@@ -11,9 +11,61 @@ Each direct-verification entry is a timestamped record of tested machine-service
 
 | Date | Service | Settlement | Fulfilment | Output validation | Classification |
 | --- | --- | --- | --- | --- | --- |
+| 6 Sep 2026 | IBANforge — IBAN Validate | 0.010 USDC total across 2 paid controls, independently observed on Base | 2/2 observed | `valid` matched independent ISO 13616 MOD-97 expectations for positive and negative controls | signed Assurance commissioning evidence |
 | 22 Aug 2026 | x402Node — JSON Repair | 0.006 USDC observed | observed | 4/4 assertions passed | `settled_fulfilment_valid` |
 | 22 Aug 2026 | x402.direct — Service Directory Search | no 0.001 USDC settlement observed after authorised paid-path failure | not observed; HTTP 500 | not reached | `pre_settlement_paid_path_failure` |
 | 22 Aug 2026 | x402engine — Web Screenshot | 0.01 USDC observed | observed; HTTP 200 | screenshot artefact failed strict base64/PNG validation | `settled_fulfilment_contract_invalid` |
+
+## Completed external Assurance Runner commissioning — IBANforge
+
+On 6 September 2026 Atinamos completed the first end-to-end external commissioning run of the current Assurance Runner publication path against:
+
+```text
+POST https://api.ibanforge.com/v1/iban/validate
+```
+
+The run was **human-triggered commissioning using Runner-controlled bounded execution logic**. It does not establish unattended production autonomy.
+
+Two independently controlled fixtures were used:
+
+```text
+DE89370400440532013000 → expected valid=true  → observed valid=true
+DE90370400440532013000 → expected valid=false → observed valid=false
+```
+
+The independent method was:
+
+```text
+ISO 13616 MOD-97
+```
+
+Only the seller response field:
+
+```text
+valid
+```
+
+was independently validated. Other enrichment fields returned by the service were not promoted to independently verified evidence.
+
+Two real x402 calls were paid at 0.005 USDC each. Settlement was independently observed on Base for both paid controls, fulfilment was observed, and both `valid` results matched the independent expectation.
+
+Two signed production Assurance Evidence Receipts were then published:
+
+```text
+negative: atinamos:receipt:c9f7dc76-898d-5d95-9dfc-388055750c58
+positive: atinamos:receipt:a6caf2c0-4f56-545b-ba8a-e62d0379b085
+```
+
+The publication path also exercised a fail-closed recovery case: an initial publication dispatch reached a write-disabled receiver and returned HTTP 503. The Runner did not automatically replay an uncertain dispatch. GET-only reconciliation confirmed no record, and one explicit operator-approved exact replay was performed only after receiver idempotency and write state were checked.
+
+- [External commissioning record](experiments/2026-09-06-ibanforge-assurance-commissioning/README.md)
+- Negative signed receipt: `https://verify.atinamos.co.uk/assurance/receipts/atinamos:receipt:c9f7dc76-898d-5d95-9dfc-388055750c58/`
+- Positive signed receipt: `https://verify.atinamos.co.uk/assurance/receipts/atinamos:receipt:a6caf2c0-4f56-545b-ba8a-e62d0379b085/`
+- Human evidence lookup: `https://assurance.atinamos.co.uk/evidence/`
+
+**Supports:** two timestamped paid external controls, independent Base settlement observation, observed fulfilment, independent MOD-97 comparison of the returned `valid` field, signed receipt publication and public buyer lookup.
+
+**Does not support:** permanent reliability, universal IBAN correctness, correctness of unrelated enrichment fields, provider-wide trustworthiness, proof of internal implementation, traffic indistinguishability, unattended production autonomy or a universal purchase recommendation.
 
 ## Completed assurance series — code402 LEI Check
 
@@ -193,6 +245,7 @@ This milestone is intentionally kept outside the direct-verification provider ta
 - [Evidence & Classification Methodology v1.0](methodology/evidence-and-classification.md)
 - [Public Verification Receipt Specification v1.0](specifications/public-verification-receipt-v1.md)
 - [Verification Receipt v1 JSON Schema](schemas/verification-receipt-v1.schema.json)
+- [Machine-Evidence Schema Audit — 6 September 2026](research/2026-09-06-machine-evidence-schema-audit.md)
 
 The evidence chain is deliberately separated:
 
@@ -206,6 +259,8 @@ payment contract observed
 ```
 
 A later stage is never inferred simply because an earlier stage succeeded.
+
+Published observation counts are sample counts, not permanent reliability percentages. A narrow independent correctness check applies only to the capability and output fields actually tested.
 
 ## Provenance rule
 
