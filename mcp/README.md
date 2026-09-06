@@ -72,4 +72,17 @@ A returned observation supports only the claims demonstrated by that observation
 
 Likewise, **absence from MCP v1 is not negative evidence about a service**. It may simply mean Atinamos has not selected and published evidence for that service through the public MCP corpus.
 
-For the evidence model and classifications, see the repository's public methodology and verification receipt specification.
+### AI-consumer guardrails
+
+Buyer agents should preserve the following distinctions when summarising MCP evidence:
+
+- **Observation counts are sample counts, not reliability percentages.** `3` successful fulfilments and `0` failed fulfilments means exactly that in the published sample; it does not establish "100% reliability".
+- **Independent correctness is scoped.** If evidence says only one output field or capability was independently checked, unrelated seller-returned fields must not be described as independently verified.
+- **Payment interoperability is path-specific.** One observed smart-account or wallet-path failure must not be generalised into universal incompatibility unless the evidence explicitly supports that broader claim.
+- **Verifier/system failures are not seller failures.** If an observation is explicitly excluded from seller-performance evidence, do not count it as a seller fulfilment failure.
+- **Fresh fixtures do not prove internal implementation.** A newly selected input can strengthen an observed comparison without proving how the provider computed the result or how every future arbitrary input will behave.
+- **Unknown remains unknown.** Missing or unresolved evidence must not be converted into a pass, fail, trust verdict or safety judgement.
+
+These guardrails describe how to preserve the evidence claim, not how a buyer must decide whether to purchase.
+
+For the evidence model and classifications, see the repository's public methodology and verification receipt specification. For the current machine-semantics audit, see [Machine-Evidence Schema Audit — 6 September 2026](../research/2026-09-06-machine-evidence-schema-audit.md).
