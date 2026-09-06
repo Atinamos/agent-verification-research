@@ -52,6 +52,24 @@ Do not necessarily publish future test cases, challenge selection, anti-gaming h
 
 A seller should understand the rules of the examination without receiving tomorrow's examination paper.
 
+## Evidence-claim boundary
+
+Before publication, check that the wording does not promote a narrow observation into a stronger claim.
+
+In particular:
+
+- a successful observation count is not a reliability percentage;
+- one failed or successful observation is not a permanent provider rating;
+- a check of one output field or capability must not be described as verification of unrelated response fields or the provider as a whole;
+- a payment-interoperability observation must remain scoped to the tested wallet/payment path unless broader evidence exists;
+- a verifier/system failure must not be described as a seller fulfilment failure;
+- a fresh fixture can strengthen an observed comparison but does not by itself prove the provider's internal implementation;
+- no evidence held is not negative evidence;
+- `null`, false and absent evidence states must not be silently collapsed;
+- seller-funded testing must not be presented as seller-controlled methodology, outcome or trust status.
+
+Where a public receipt or evidence object contains explicit limitations, those limitations are part of the claim and should remain visible in derived summaries.
+
 ## Required safety check before every public push
 
 Check specifically for:
@@ -71,6 +89,16 @@ Check specifically for:
 - private transaction/account information;
 - unpublished test techniques;
 - intentionally private implementation detail.
+
+Then check the evidence claim itself:
+
+- exact service route and method are stated where material;
+- sample size and dates are not hidden;
+- independently tested capability is no broader than the actual check;
+- seller-performance evidence is not mixed with verifier or interoperability events;
+- observation counts are not restated as statistical reliability;
+- limitations and unknowns remain explicit;
+- the publication does not create a universal trust, safety or purchase verdict.
 
 If uncertain, do not publish.
 
