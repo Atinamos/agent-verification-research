@@ -150,6 +150,29 @@ However, current Assurance evidence now needs a clearer machine distinction betw
 
 A newer additive/versioned format should avoid making one Boolean carry all of those meanings.
 
+### 6. HTTP method is part of evidence identity
+
+The original MCP v1 lookup shape is endpoint-oriented, while the current Verify Evidence API accepts both endpoint and HTTP method.
+
+Method is material evidence. For example:
+
+```text
+GET https://service.example/task
+POST https://service.example/task
+```
+
+may be different machine-service contracts with different payment requirements, request bodies, fulfilment behaviour and evidence histories.
+
+A buyer must not infer that evidence observed for one HTTP method automatically applies to another method at the same URL.
+
+Current exact-route machine evidence therefore uses:
+
+```text
+GET /v1/evidence?endpoint=<service-url>&method=<HTTP-method>
+```
+
+Future MCP evolution should preserve method-level identity explicitly rather than requiring an AI consumer to infer it from nested historical records.
+
 ## Format evolution
 
 Atinamos now has two relevant public generations of evidence representation:
@@ -166,6 +189,10 @@ The preferred direction is therefore additive versioning and backward-compatible
 The audit recommends that a future versioned evidence projection make these concepts first-class where the underlying evidence supports them:
 
 ```text
+identity
+  endpoint
+  method
+
 scope
   tested_capability
   verified_output_fields
@@ -199,6 +226,7 @@ Any future schema tightening should preserve the following rules:
 
 - historical receipts remain immutable;
 - signed content is never silently rewritten;
+- endpoint and method remain material service identity where applicable;
 - unknown remains distinct from false;
 - no evidence remains distinct from negative evidence;
 - seller performance, verifier failure and payment interoperability remain separately attributable;
@@ -212,6 +240,6 @@ The audit found no reason to replace the core Atinamos evidence architecture.
 
 The main improvement is narrower machine semantics around:
 
-> **scope · correctness · attribution · limitations · observation counts**
+> **identity · scope · correctness · attribution · limitations · observation counts**
 
 The next implementation step should be a read-only comparison against the live Verify evidence builder and signed-receipt projection before any new public schema is introduced. That comparison should identify which of these concepts already exist in retained evidence and merely need exposing, and which would require genuinely new fields.
