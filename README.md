@@ -41,6 +41,21 @@ The research record deliberately retains the earlier autonomous no-purchase, rou
 
 This proves the controlled Atinamos buyer experiment. It does **not** prove unrelated external-agent adoption of Atinamos, a universal safe/unsafe verdict or permanent provider reliability.
 
+## External Assurance Runner commissioning — 6 September 2026
+
+Atinamos completed the first end-to-end external commissioning run of the current Assurance Runner publication path against:
+
+```text
+POST https://api.ibanforge.com/v1/iban/validate
+```
+
+The human-triggered commissioning run made two bounded x402 purchases at 0.005 USDC each, independently observed Base settlement, captured fulfilment, compared the returned `valid` field against independently precomputed ISO 13616 MOD-97 expectations for one positive and one negative IBAN fixture, and published two signed production Assurance Evidence Receipts.
+
+The scope is deliberately narrow: the run independently validated only the returned `valid` field. It does not establish correctness of unrelated enrichment fields, universal IBAN correctness, permanent reliability or unattended production autonomy.
+
+- [External commissioning experiment record](experiments/2026-09-06-ibanforge-assurance-commissioning/README.md)
+- Human evidence lookup: `https://assurance.atinamos.co.uk/evidence/`
+
 ## Public evidence index
 
 - [Atinamos Public Evidence Index](EVIDENCE_INDEX.md) — one place to review the currently published direct verification observations, classifications, study links and technical receipts.
@@ -77,10 +92,27 @@ The private PostgreSQL database remains private. The public Verify deployment re
 ## Methodology and specifications
 
 - [Evidence & Classification Methodology v1.0](methodology/evidence-and-classification.md) — defines observable evidence stages, current public classifications, unknown-evidence handling and interpretation rules.
-- [Public Verification Receipt Specification v1.0](specifications/public-verification-receipt-v1.md) — explains every public receipt field, null/unknown semantics, buyer interpretation and sanitisation boundaries.
-- [Public Verification Receipt v1 JSON Schema](schemas/verification-receipt-v1.schema.json) — machine-readable receipt contract.
+- [Public Verification Receipt Specification v1.0](specifications/public-verification-receipt-v1.md) — explains every original public receipt field, null/unknown semantics, buyer interpretation and sanitisation boundaries.
+- [Public Verification Receipt v1 JSON Schema](schemas/verification-receipt-v1.schema.json) — machine-readable contract for the original public receipt projection.
+- [Machine-Evidence Schema Audit — 6 September 2026](research/2026-09-06-machine-evidence-schema-audit.md) — records current scope, correctness, attribution, limitation and observation-count semantics that should be preserved as the newer signed Assurance evidence format evolves.
+
+The original verification-receipt v1 format and the newer production signed Assurance Evidence Receipt are separate generations of public evidence representation. Historical signed or published evidence should remain valid in the format in which it was issued rather than being silently rewritten.
 
 ## Public research notes
+
+### 6 September 2026 — Machine-Evidence Schema Audit
+
+A read-only audit tested how an independent AI consumer interpreted published Atinamos evidence. The audit found that the core architecture remains sound but identified places where machine-readable semantics should be tightened so a narrow observation is less likely to be inflated into a broader claim.
+
+The key design direction is:
+
+```text
+scope · correctness · attribution · limitations · observation counts
+```
+
+In particular, successful observation counts are not reliability percentages, one wallet-path interoperability failure is not universal incompatibility, a fresh fixture does not prove internal implementation, and independently checking one response field does not verify unrelated seller-returned fields.
+
+- [Machine-Evidence Schema Audit — 6 September 2026](research/2026-09-06-machine-evidence-schema-audit.md)
 
 ### 28 August 2026 — Proof #3 Autonomous Buyer
 
@@ -107,6 +139,27 @@ A controlled x402.jobs ingestion test showed why an observed marketplace listing
 The controlled sample was 10 listings and is not presented as an estimate of the full x402.jobs catalogue.
 
 ## Published evidence
+
+### 6 September 2026 — IBANforge external Assurance commissioning
+
+Atinamos completed two bounded paid controls against `POST https://api.ibanforge.com/v1/iban/validate`.
+
+```text
+positive fixture: DE89370400440532013000 → expected true  → observed true
+negative fixture: DE90370400440532013000 → expected false → observed false
+independent method: ISO 13616 MOD-97
+verified output field: valid
+payment: 0.005 USDC per control
+settlement: independently observed on Base for both
+fulfilment: observed for both
+signed Assurance receipts: 2
+```
+
+- [External commissioning record](experiments/2026-09-06-ibanforge-assurance-commissioning/README.md)
+
+**Supports:** the two timestamped paid controls, independent settlement observation, observed fulfilment, independent correctness comparison of the returned `valid` field and signed receipt publication.
+
+**Does not support:** universal IBAN correctness, correctness of BIC/SEPA/bank/LEI enrichment, internal implementation mechanism, permanent reliability, traffic indistinguishability, unattended production autonomy or a universal purchase recommendation.
 
 ### 3 September 2026 — code402 LEI Check assurance series
 
@@ -198,12 +251,12 @@ GitHub is not where Atinamos Verification runs. It is where Atinamos publishes s
 
 - `mcp/` — public Atinamos Evidence MCP endpoint documentation, tool reference, buyer-policy schema and tested examples.
 - `market/` — public Market Search endpoint, scope and interpretation documentation.
-- `schemas/` — public machine-readable evidence schemas.
+- `schemas/` — public machine-readable evidence schemas and format-versioning notes.
 - `examples/` — sanitised example requests, responses and receipts.
 - `methodology/` — public verification methodology and evidence interpretation.
 - `experiments/` — deliberately published experiment records.
 - `datasets/` — deliberately published public datasets.
-- `research/` — public technical research notes derived from controlled Atinamos observations.
+- `research/` — public technical research notes derived from controlled Atinamos observations and schema/interpretation audits.
 - `specifications/` — public technical specifications and interfaces.
 
 See `PUBLICATION_POLICY.md` before adding any material.
