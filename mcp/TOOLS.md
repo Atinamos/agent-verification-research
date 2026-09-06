@@ -26,6 +26,22 @@ Typical response content includes:
 - response hash;
 - evidence source.
 
+### Method / exact-route note
+
+MCP v1 retains its original endpoint-oriented tool shape. HTTP method is material evidence: `GET` and `POST` against the same URL can be different machine-service contracts.
+
+For current exact route-and-method evidence, use the Verify Evidence API:
+
+```text
+GET https://verify.atinamos.co.uk/v1/evidence?endpoint=<service-url>&method=<HTTP-method>
+```
+
+Do not infer that evidence observed for one HTTP method automatically applies to another method at the same URL.
+
+### Count interpretation
+
+Verification and fulfilment counts are observation counts from the published evidence corpus. They are not reliability percentages or guarantees of future behaviour.
+
 ## `service_history(endpoint)`
 
 Returns the timestamped published observation history for one canonical service route.
@@ -39,6 +55,8 @@ Input:
 ```
 
 If the service route is unknown, the response contains `known: false` and an empty observation list.
+
+A history entry should be interpreted according to its own method, timestamp, scope, attribution and limitations. Repetition does not turn a sample automatically into a statistical reliability estimate.
 
 ## `search_services(query, limit)`
 
@@ -62,6 +80,8 @@ published_atinamos_evidence
 ```
 
 This is important: MCP v1 search is not a claim to expose the complete private Atinamos service catalogue.
+
+A search result also does not itself establish current availability, successful fulfilment, independent correctness or a recommendation to buy. Inspect the evidence for the exact route being considered.
 
 ## `evaluate_policy(endpoint, policy)`
 
@@ -102,6 +122,8 @@ The response also returns:
 
 `evaluate_policy` is not a universal trust score and is not a purchase instruction. The caller owns the policy and the procurement decision.
 
+`eligible` must not be paraphrased as "trusted", "safe", "100% reliable" or "Atinamos recommends buying". It means only that the evidence available to the evaluator satisfied the rules supplied by that caller.
+
 ### HTTP adapter
 
 MCP remains the primary autonomous-agent integration surface. Developers and non-MCP clients can call the same evaluator through:
@@ -111,3 +133,5 @@ POST https://verify.atinamos.co.uk/v1/assurance/evaluate-policy
 ```
 
 The HTTP route delegates to the same policy implementation as the MCP tool; it is not a separate scoring or decision system.
+
+For the current machine-evidence interpretation audit, see [Machine-Evidence Schema Audit — 6 September 2026](../research/2026-09-06-machine-evidence-schema-audit.md).
