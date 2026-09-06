@@ -3,7 +3,7 @@
 **Status:** Public methodology  
 **Version:** 1.0  
 **Published:** 23 August 2026  
-**Updated:** 3 September 2026
+**Updated:** 6 September 2026
 
 > **You can pay to be tested. You cannot pay to be trusted.**
 
@@ -90,6 +90,78 @@ Examples may include:
 
 Atinamos records assertion outcomes rather than converting them into a broad judgement about the provider.
 
+## Scope of independent validation
+
+An independent correctness check applies only to the capability, field, artefact or condition actually tested.
+
+For example, if a service returns:
+
+```text
+valid
+bic
+bank_code
+sepa
+issuer
+risk_indicators
+```
+
+and Atinamos independently checks only `valid`, then the correct publication claim is that `valid` was independently checked under the stated method and fixture.
+
+The other returned fields may have been observed, but they must not be promoted to independently verified evidence unless a separate check supports that stronger claim.
+
+The same rule applies to service-level language: verifying an IBAN checksum field does not by itself verify every enrichment capability offered by an IBAN API.
+
+## Observation counts are not reliability percentages
+
+Atinamos may publish counts such as:
+
+```text
+successful_fulfilments: 3
+failed_fulfilments: 0
+```
+
+Those values describe the published observation sample.
+
+They must not be restated by Atinamos as:
+
+```text
+100% reliable
+```
+
+unless a separate statistical methodology and evidence basis explicitly supports such an estimate.
+
+The correct interpretation is narrower:
+
+> Three seller-attributable successful fulfilments were observed in the published sample and no seller-attributable failed fulfilment was present in that same sample.
+
+Future behaviour remains unestablished.
+
+## Failure and interoperability attribution
+
+Not every unsuccessful path is seller-performance evidence.
+
+Where the evidence supports it, Atinamos distinguishes categories such as:
+
+- seller/service fulfilment failure;
+- verifier or system configuration failure;
+- payment interoperability issue;
+- pre-payment observation where seller performance was not exercised;
+- unknown or unresolved attribution.
+
+A verifier-side configuration failure must not be counted as a seller fulfilment failure.
+
+A payment interoperability observation must remain scoped to the tested payment path. One smart-account or wallet-path failure does not establish universal incompatibility with every smart account, wallet implementation or payment route.
+
+Likewise, a pre-payment observation of a payment contract is useful evidence about the contract but is not seller-performance evidence unless the paid fulfilment path was actually exercised.
+
+## Fresh fixtures and implementation claims
+
+Fresh or varied fixtures can reduce the value of memorising a previously known static test input.
+
+They do not, by themselves, prove the provider's internal implementation mechanism, prove all arbitrary future inputs, or establish that verifier traffic was indistinguishable from ordinary buyer traffic.
+
+A publication should therefore distinguish the observed result from any stronger implementation claim.
+
 ## Current public classifications
 
 The classification describes the observed execution state of one timestamped verification. It is not a permanent provider rating.
@@ -126,6 +198,8 @@ Evidence supports that:
 
 This classification exists specifically to prevent payment settlement or HTTP 200 from being mistaken for valid delivery.
 
+Newer Assurance evidence may also publish narrower execution or interoperability classifications. Consumers should interpret the accompanying stage, attribution, scope and limitation fields rather than treating any classification string as a provider-wide verdict.
+
 ## Timestamped observations, not permanent ratings
 
 Every verification result is an observation of a specific service invocation at a particular time and under a defined test.
@@ -148,6 +222,8 @@ Public verification receipts may include hashes, transaction references, timesta
 
 The public record is sanitised. It does not include wallet secrets, credentials, private infrastructure, verifier implementation, unpublished challenge logic or anti-gaming techniques.
 
+Production Assurance also publishes signed Evidence Receipts with canonical signed content, content commitment, signing-key identity and explicit integrity metadata. Historical public verification-receipt v1 records remain valid evidence in the format in which they were originally published.
+
 ## Buyer decision remains external
 
 Atinamos intentionally separates evidence generation from procurement policy.
@@ -168,9 +244,10 @@ Those are buyer decisions, not Atinamos trust verdicts.
 
 Published studies demonstrate different evidence stages and execution states:
 
-| Observation | Settlement | Fulfilment | Output validation | Classification |
+| Observation | Settlement | Fulfilment | Output validation | Interpretation |
 | --- | --- | --- | --- | --- |
-| code402 LEI Check — 3 Sep 2026 Phase 1 | not attempted | paid fulfilment not tested | not yet tested | `payment_contract_observed` |
+| IBANforge IBAN Validate — 6 Sep 2026 | 2 paid controls independently observed on Base | 2/2 observed | returned `valid` matched independent MOD-97 expectation for both controls | signed Assurance commissioning evidence; only `valid` independently checked |
+| code402 LEI Check — 3 Sep 2026 | 2 EOA payments observed; 1 smart-account path did not settle | 2 paid EOA fulfilments observed | positive and negative checksum expectations matched; separate smart-account interoperability issue | mixed evidence series; interoperability issue is not universal smart-account incompatibility |
 | x402Node JSON Repair — 22 Aug 2026 | observed | observed | valid | `settled_fulfilment_valid` |
 | x402.direct Search — 22 Aug 2026 | not observed | not observed | not reached | `pre_settlement_paid_path_failure` |
 | x402engine Web Screenshot — 22 Aug 2026 | observed | observed | invalid | `settled_fulfilment_contract_invalid` |
@@ -191,3 +268,5 @@ It intentionally does not publish:
 - wallet or credential material.
 
 That boundary protects test independence without changing the meaning of the published evidence.
+
+For the current machine-readable semantics review, see [Machine-Evidence Schema Audit — 6 September 2026](../research/2026-09-06-machine-evidence-schema-audit.md).
