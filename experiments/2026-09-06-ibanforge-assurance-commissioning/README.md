@@ -77,7 +77,27 @@ Two paid x402 calls were made under the commissioning policy.
 positive control: 0.005 USDC
 negative control: 0.005 USDC
 total observed test spend: 0.010 USDC
-network: Base mainnet
+network: Base mainnet / chain 8453
+```
+
+Independent settlement references retained by the Runner:
+
+Positive control:
+
+```text
+transaction: 0x60d6747a566f8e820d44fa075126dd415990334bef2b36c944840fb6b7eacd45
+block: 50962836
+amount: 0.005 USDC
+settlement status: CONFIRMED
+```
+
+Negative control:
+
+```text
+transaction: 0x73261a10bdfc03db1203897d4f86a158698b14280a44894b749c2f8fee5a17f9
+block: 50963382
+amount: 0.005 USDC
+settlement status: CONFIRMED
 ```
 
 For both paid controls:
@@ -86,6 +106,8 @@ For both paid controls:
 - fulfilment was observed;
 - the returned `valid` value matched the independently precomputed expectation;
 - the validation result was terminal and publishable.
+
+The transaction references are public chain references. They are included so the settlement claims can be independently inspected; they do not by themselves prove fulfilment or correctness.
 
 ## Signed Assurance Evidence Receipts
 
