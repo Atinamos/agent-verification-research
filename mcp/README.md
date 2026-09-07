@@ -36,6 +36,25 @@ As the interface is proven, the intended direction is for MCP to expose an appro
 - `search_services(query, limit)` — search services represented in the published Atinamos evidence corpus.
 - `evaluate_policy(endpoint, policy)` — evaluate the published evidence against caller-supplied procurement rules.
 
+## Method identity boundary
+
+MCP v1 is primarily endpoint-oriented, while the newer exact-route Assurance evidence API accepts both endpoint and HTTP method:
+
+```text
+GET /v1/assurance/evidence?endpoint=<service-url>&method=<HTTP-method>
+```
+
+HTTP method is material evidence identity. For example:
+
+```text
+GET https://service.example/task
+POST https://service.example/task
+```
+
+may be different machine-service contracts with different payment requirements, request bodies, fulfilment behaviour and evidence histories.
+
+A buyer must not infer that evidence observed for one HTTP method automatically applies to another method at the same URL. Future MCP evolution should preserve method-level identity explicitly rather than relying on a consumer to infer it from nested records.
+
 ## Start here
 
 - [Quick start](QUICKSTART.md)
@@ -81,6 +100,7 @@ Buyer agents should preserve the following distinctions when summarising MCP evi
 - **Payment interoperability is path-specific.** One observed smart-account or wallet-path failure must not be generalised into universal incompatibility unless the evidence explicitly supports that broader claim.
 - **Verifier/system failures are not seller failures.** If an observation is explicitly excluded from seller-performance evidence, do not count it as a seller fulfilment failure.
 - **Fresh fixtures do not prove internal implementation.** A newly selected input can strengthen an observed comparison without proving how the provider computed the result or how every future arbitrary input will behave.
+- **HTTP method is part of evidence identity.** Do not apply evidence for one method to another method at the same URL unless the evidence explicitly covers both.
 - **Unknown remains unknown.** Missing or unresolved evidence must not be converted into a pass, fail, trust verdict or safety judgement.
 
 These guardrails describe how to preserve the evidence claim, not how a buyer must decide whether to purchase.
