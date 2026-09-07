@@ -74,6 +74,8 @@ AI agents and developers can query selected published Atinamos evidence through 
 
 The MCP exposes deliberately published evidence and caller-supplied policy evaluation. It does not expose wallet access, payment signing, verification-triggering writes, the full private harvest registry or a universal trust verdict.
 
+MCP v1 remains primarily endpoint-oriented. For current exact-route Assurance evidence, HTTP method is also material identity and is explicitly accepted by `GET /v1/assurance/evidence?endpoint=<service-url>&method=<HTTP-method>`. Evidence observed for one HTTP method must not be silently applied to another method at the same URL.
+
 ## Public Market Search
 
 Atinamos now exposes a bounded, read-only search projection of the wider machine-service harvest registry.
@@ -94,7 +96,7 @@ The private PostgreSQL database remains private. The public Verify deployment re
 - [Evidence & Classification Methodology v1.0](methodology/evidence-and-classification.md) — defines observable evidence stages, current public classifications, unknown-evidence handling and interpretation rules.
 - [Public Verification Receipt Specification v1.0](specifications/public-verification-receipt-v1.md) — explains every original public receipt field, null/unknown semantics, buyer interpretation and sanitisation boundaries.
 - [Public Verification Receipt v1 JSON Schema](schemas/verification-receipt-v1.schema.json) — machine-readable contract for the original public receipt projection.
-- [Machine-Evidence Schema Audit — 6 September 2026](research/2026-09-06-machine-evidence-schema-audit.md) — records current scope, correctness, attribution, limitation and observation-count semantics that should be preserved as the newer signed Assurance evidence format evolves.
+- [Machine-Evidence Schema Audit — 6 September 2026](research/2026-09-06-machine-evidence-schema-audit.md) — records current identity, scope, correctness, attribution, limitation and observation-count semantics that should be preserved as the newer signed Assurance evidence format evolves.
 
 The original verification-receipt v1 format and the newer production signed Assurance Evidence Receipt are separate generations of public evidence representation. Historical signed or published evidence should remain valid in the format in which it was issued rather than being silently rewritten.
 
@@ -107,10 +109,10 @@ A read-only audit tested how an independent AI consumer interpreted published At
 The key design direction is:
 
 ```text
-scope · correctness · attribution · limitations · observation counts
+identity · scope · correctness · attribution · limitations · observation counts
 ```
 
-In particular, successful observation counts are not reliability percentages, one wallet-path interoperability failure is not universal incompatibility, a fresh fixture does not prove internal implementation, and independently checking one response field does not verify unrelated seller-returned fields.
+In particular, endpoint and HTTP method are material service identity, successful observation counts are not reliability percentages, one wallet-path interoperability failure is not universal incompatibility, a fresh fixture does not prove internal implementation, and independently checking one response field does not verify unrelated seller-returned fields.
 
 - [Machine-Evidence Schema Audit — 6 September 2026](research/2026-09-06-machine-evidence-schema-audit.md)
 
