@@ -1,70 +1,210 @@
 # Atinamos Agent Verification Research
 
-Public research, schemas and technical evidence for Atinamos independent verification of paid AI agent services.
+Public research, schemas and technical evidence for Atinamos independent verification of paid AI-agent and machine services.
 
 **Human-readable research:** https://verify.atinamos.co.uk  
 **Technical evidence:** this repository
 
 > **You can pay to be tested. You cannot pay to be trusted.**
 
-## Purpose
+Atinamos produces scoped evidence. The buyer decides what that evidence means under its own policy.
 
-This repository is the public technical publication layer for Atinamos Verification.
+Atinamos does **not** issue a universal trust score, certification, approval, safe/unsafe verdict or permanent provider rating.
 
-It exists to publish selected, sanitised material that helps developers, researchers, buyer agents, marketplaces and registries understand and consume Atinamos evidence and public machine-service interfaces.
+## Current state — 7 September 2026
 
-Atinamos produces evidence. Trust is the conclusion the buyer reaches from that evidence.
+Read the canonical public status first:
 
-## Proof #3 — autonomous buyer milestone
+- [Current Assurance / Verification state](CURRENT_STATE_2026-09-07.md)
+- [Public Evidence Index](EVIDENCE_INDEX.md)
 
-**COMPLETE — 28 August 2026.**
+The main technical milestone is now the first **unattended generic external Assurance execution from an already-frozen plan**.
 
-An Atinamos-operated bounded buyer was given a task, a maximum spend and a risk policy. It independently searched Coinbase/x402 Bazaar, checked exact invocation-route viability, queried already-published Atinamos evidence, applied its own procurement policy, selected an external seller without a human naming the seller, made a bounded x402 payment, consumed the result and exactly validated the purchased output.
-
-Final clean run:
+### Keyronne JSON Repair
 
 ```text
-selected seller: Keyronne JSON Repair
-payment: 0.001 USDC on Base
-x402: v2 / exact
-paid HTTP status: 200
-settlement: observed successful
-output: exact semantic match
-proof3_complete: true
+service: POST https://keyronne.com/api/json-repair
+run:     1b5bc844-368c-445a-8f84-e62be6d88baa
+adapter: generic-transaction-fulfilment v1.0
+state:   PLAN_FROZEN → COMPLETE
+spend:   0.001 USDC
 ```
 
-The research record deliberately retains the earlier autonomous no-purchase, route-identity issue and first paid validator-envelope failure rather than presenting only the final successful run.
+One internal production coordinator invocation handled the routine paid execution stages without an operator manually stepping x402 challenge acquisition, payment signing, paid dispatch, settlement observation, fulfilment evaluation or Verification publication.
 
-- [Proof #3 public research note](research/2026-08-28-proof3-autonomous-buyer.md)
-- [Proof #3 experiment record](experiments/2026-08-28-proof3-autonomous-buyer/README.md)
-- [Sanitised final buyer receipt](experiments/2026-08-28-proof3-autonomous-buyer/public-receipt.json)
+Independent Base settlement:
 
-This proves the controlled Atinamos buyer experiment. It does **not** prove unrelated external-agent adoption of Atinamos, a universal safe/unsafe verdict or permanent provider reliability.
+```text
+transaction: 0xc42bb177c41d21a56e9d3c02546fa8ebeda911cff3bc1139169a61c89f7b495c
+block:       50996015
+```
 
-## External Assurance Runner commissioning — 6 September 2026
+Signed evidence:
 
-Atinamos completed the first end-to-end external commissioning run of the current Assurance Runner publication path against:
+```text
+atinamos:receipt:10e40afd-f6b1-57bd-9c1e-0a4a1695a428
+```
+
+Observed evidence layers:
+
+```text
+PAYMENT       SETTLED
+FULFILMENT    FULFILLED
+CORRECTNESS   NOT_EVALUATED
+QUALITY       NOT_EVALUATED
+```
+
+The service returned the advertised kind of JSON deliverable. Atinamos did not infer semantic correctness or quality from that fulfilment.
+
+- [Keyronne unattended generic Assurance experiment](experiments/2026-09-07-keyronne-unattended-generic-assurance/README.md)
+- Human-readable record: https://verify.atinamos.co.uk/research/unattended-generic-assurance-keyronne/
+
+### Important boundary
+
+The Keyronne run began at `PLAN_FROZEN`.
+
+It proves:
+
+```text
+frozen independent plan
+→ real bounded external purchase
+→ independent Base settlement observation
+→ fulfilment evidence
+→ immutable Verification package
+→ signed receipt
+→ COMPLETE
+```
+
+It does **not yet** prove the complete public seller journey:
+
+```text
+raw seller URL
+→ non-spending discovery
+→ scope explanation
+→ independent frozen plan
+→ seller funding
+→ durable queue
+→ proven Runner
+→ signed evidence
+```
+
+That seller product journey is now the main development lane.
+
+## Current development priority
+
+```text
+PROVEN ENGINE
+      ↓
+SELLER PRODUCT
+      ↓
+FIRST USERS
+      ↓
+REVENUE / MARKET FEEDBACK
+```
+
+Human seller productisation comes first. A later AI-seller API/MCP should use the same underlying Assurance run/order model rather than introducing another execution engine.
+
+## Earlier production milestone — IBANforge deterministic commissioning
+
+On **6 September 2026**, Atinamos completed the first end-to-end external deterministic commissioning of the current Assurance Runner → Verification publication path against:
 
 ```text
 POST https://api.ibanforge.com/v1/iban/validate
 ```
 
-The human-triggered commissioning run made two bounded x402 purchases at 0.005 USDC each, independently observed Base settlement, captured fulfilment, compared the returned `valid` field against independently precomputed ISO 13616 MOD-97 expectations for one positive and one negative IBAN fixture, and published two signed production Assurance Evidence Receipts.
+Two bounded x402 calls were made at 0.005 USDC each. Settlement was independently observed on Base, useful fulfilment returned, and the returned `valid` field matched independently derived ISO 13616 MOD-97 expectations for one valid and one invalid fixture.
 
-The scope is deliberately narrow: the run independently validated only the returned `valid` field. It does not establish correctness of unrelated enrichment fields, universal IBAN correctness, permanent reliability or unattended production autonomy.
+```text
+total observed test spend:    0.010 USDC
+Base settlements observed:    2
+successful fulfilments:       2
+independent controls passed:  2 / 2
+signed Assurance receipts:    2
+```
 
-- [External commissioning experiment record](experiments/2026-09-06-ibanforge-assurance-commissioning/README.md)
-- Human evidence lookup: `https://assurance.atinamos.co.uk/evidence/`
+That run was **human-triggered commissioning**. It remains an important earlier milestone and should not be retroactively described as unattended.
 
-## Public evidence index
+- [IBANforge external commissioning experiment](experiments/2026-09-06-ibanforge-assurance-commissioning/README.md)
 
-- [Atinamos Public Evidence Index](EVIDENCE_INDEX.md) — one place to review the currently published direct verification observations, classifications, study links and technical receipts.
+## Earlier autonomous buyer milestone — Proof #3
+
+On **28 August 2026**, an Atinamos-operated bounded buyer was given a task, maximum spend and buyer policy. It independently searched an external x402 marketplace, checked exact-route viability, queried published Atinamos evidence, applied its own policy, selected an external seller without the human naming the seller, made a bounded payment, consumed the result and validated the purchased output.
+
+Final clean run:
+
+```text
+selected seller: Keyronne JSON Repair
+payment:         0.001 USDC on Base
+x402:            v2 / exact
+paid HTTP:       200
+proof3_complete: true
+```
+
+- [Proof #3 research note](research/2026-08-28-proof3-autonomous-buyer.md)
+- [Proof #3 experiment record](experiments/2026-08-28-proof3-autonomous-buyer/README.md)
+- [Sanitised final buyer receipt](experiments/2026-08-28-proof3-autonomous-buyer/public-receipt.json)
+
+This proves the controlled Atinamos buyer experiment. It does not establish widespread external-agent adoption of Atinamos evidence.
+
+## First confirmed external commercial purchase of an Atinamos service
+
+Also on **28 August 2026**, Atinamos observed an unrelated external client purchase Atinamos JSON Repair for 0.005 USDC through x402 and receive successful HTTP fulfilment.
+
+- [Research note](research/2026-08-28-first-external-commercial-purchase.md)
+- [Sanitised experiment record](experiments/2026-08-28-external-json-repair-purchase/README.md)
+- [Sanitised public evidence](experiments/2026-08-28-external-json-repair-purchase/public-evidence.json)
+
+This establishes external commercial use of an Atinamos machine service. It does not establish that the purchaser was definitely an autonomous AI agent.
+
+## Other published direct evidence
+
+The repository deliberately retains successful and unsuccessful observations, including:
+
+- [code402 LEI Check assurance series](experiments/2026-09-03-code402-lei-check/README.md)
+- [x402Node JSON Repair](experiments/2026-08-22-x402node-json-repair/README.md)
+- [x402.direct Service Directory Search](experiments/2026-08-22-x402direct-search/README.md)
+- [x402engine Web Screenshot](experiments/2026-08-22-x402engine-web-screenshot/README.md)
+
+See [EVIDENCE_INDEX.md](EVIDENCE_INDEX.md) for the current consolidated index.
+
+## Evidence semantics
+
+Atinamos keeps these evidence layers separate:
+
+```text
+PAYMENT
+Did payment settle?
+
+FULFILMENT
+Did the advertised kind of deliverable return?
+
+CORRECTNESS
+Was the returned content independently checked?
+
+QUALITY
+Was subjective quality independently evaluated?
+```
+
+Guardrails:
+
+```text
+UNKNOWN != UNSAFE
+SETTLED != FULFILLED
+FULFILLED != CORRECT
+CORRECT != HIGH QUALITY
+SIGNED RECEIPT != PERMANENT TRUST
+SAMPLE COUNT != RELIABILITY PERCENTAGE
+```
+
+Endpoint and HTTP method are material evidence identity where applicable.
 
 ## Public Evidence MCP
 
-AI agents and developers can query selected published Atinamos evidence through the read-only Atinamos Evidence MCP.
+AI agents and developers can query selected published Atinamos evidence through the read-only Atinamos Evidence MCP:
 
-**Endpoint:** `https://verify.atinamos.co.uk/mcp`
+```text
+https://verify.atinamos.co.uk/mcp
+```
 
 - [MCP documentation and index](mcp/README.md)
 - [Quick start](mcp/QUICKSTART.md)
@@ -72,196 +212,65 @@ AI agents and developers can query selected published Atinamos evidence through 
 - [Buyer policy reference](mcp/BUYER_POLICY.md)
 - [Security and scope](mcp/SECURITY.md)
 
-The MCP exposes deliberately published evidence and caller-supplied policy evaluation. It does not expose wallet access, payment signing, verification-triggering writes, the full private harvest registry or a universal trust verdict.
-
-MCP v1 remains primarily endpoint-oriented. For current exact-route Assurance evidence, HTTP method is also material identity and is explicitly accepted by `GET /v1/assurance/evidence?endpoint=<service-url>&method=<HTTP-method>`. Evidence observed for one HTTP method must not be silently applied to another method at the same URL.
+The MCP exposes published evidence and buyer-supplied policy evaluation. It does not expose wallet access, payment signing, verification-triggering writes or a universal trust verdict.
 
 ## Public Market Search
 
-Atinamos now exposes a bounded, read-only search projection of the wider machine-service harvest registry.
+Atinamos exposes a bounded read-only projection of machine-service discovery observations:
 
-**Search:** `GET https://verify.atinamos.co.uk/v1/market/search?q=<query>&limit=<1-50>`  
-**Service detail:** `GET https://verify.atinamos.co.uk/v1/market/service/<service_id>`
+```text
+GET https://verify.atinamos.co.uk/v1/market/search?q=<query>&limit=<1-50>
+GET https://verify.atinamos.co.uk/v1/market/service/<service_id>
+```
 
 - [Market Search documentation](market/README.md)
 
-Market Search reports services observed by Atinamos harvesters, their source provenance and `last_observed_at`. Observation does not establish current availability, safety, trust or independent verification. **UNKNOWN is not UNSAFE.**
+Market Search reports observed listings and provenance. A market listing is not verification evidence.
 
-Market Search and the Evidence MCP are intentionally different surfaces: Market Search supports discovery across a bounded public projection of the harvested registry; Evidence MCP exposes selected published verification evidence. A Market Search result does not imply that published verification evidence exists for that service.
+## Assurance evidence reads
 
-The private PostgreSQL database remains private. The public Verify deployment reaches Market Search through a bounded GET-only proxy rather than receiving database credentials.
+Current signed Assurance evidence can be read using:
+
+```text
+GET https://verify.atinamos.co.uk/v1/assurance/receipts/<receipt_id>
+GET https://verify.atinamos.co.uk/v1/assurance/evidence?endpoint=<service-url>&method=<HTTP_METHOD>
+```
+
+Endpoint **and HTTP method** are material evidence identity.
 
 ## Methodology and specifications
 
-- [Evidence & Classification Methodology v1.0](methodology/evidence-and-classification.md) — defines observable evidence stages, current public classifications, unknown-evidence handling and interpretation rules.
-- [Public Verification Receipt Specification v1.0](specifications/public-verification-receipt-v1.md) — explains every original public receipt field, null/unknown semantics, buyer interpretation and sanitisation boundaries.
-- [Public Verification Receipt v1 JSON Schema](schemas/verification-receipt-v1.schema.json) — machine-readable contract for the original public receipt projection.
-- [Machine-Evidence Schema Audit — 6 September 2026](research/2026-09-06-machine-evidence-schema-audit.md) — records current identity, scope, correctness, attribution, limitation and observation-count semantics that should be preserved as the newer signed Assurance evidence format evolves.
-
-The original verification-receipt v1 format and the newer production signed Assurance Evidence Receipt are separate generations of public evidence representation. Historical signed or published evidence should remain valid in the format in which it was issued rather than being silently rewritten.
-
-## Public research notes
-
-### 6 September 2026 — Machine-Evidence Schema Audit
-
-A read-only audit tested how an independent AI consumer interpreted published Atinamos evidence. The audit found that the core architecture remains sound but identified places where machine-readable semantics should be tightened so a narrow observation is less likely to be inflated into a broader claim.
-
-The key design direction is:
-
-```text
-identity · scope · correctness · attribution · limitations · observation counts
-```
-
-In particular, endpoint and HTTP method are material service identity, successful observation counts are not reliability percentages, one wallet-path interoperability failure is not universal incompatibility, a fresh fixture does not prove internal implementation, and independently checking one response field does not verify unrelated seller-returned fields.
-
+- [Evidence & Classification Methodology v1.0](methodology/evidence-and-classification.md)
+- [Public Verification Receipt Specification v1.0](specifications/public-verification-receipt-v1.md)
+- [Public Verification Receipt v1 JSON Schema](schemas/verification-receipt-v1.schema.json)
 - [Machine-Evidence Schema Audit — 6 September 2026](research/2026-09-06-machine-evidence-schema-audit.md)
 
-### 28 August 2026 — Proof #3 Autonomous Buyer
+Historical evidence should remain valid in the format in which it was issued rather than being silently rewritten.
 
-A controlled buyer experiment completed the full external-discovery → evidence → policy → selection → payment → fulfilment-validation sequence without a human naming the seller. The same research trail also exposed useful failure modes: autonomous no-purchase when evidence was absent, endpoint transcription/identity drift, marketplace routes returning 404/405, live price drift, paid-but-invalid fulfilment, and a buyer-side validator-envelope defect that was fixed and rerun rather than hidden.
+## Repository purpose
 
-- [Proof #3 — A Bounded Autonomous Buyer With External Discovery](research/2026-08-28-proof3-autonomous-buyer.md)
+This repository is the deliberately sanitised public technical publication layer for Atinamos Verification and Assurance research.
 
-### 24 August 2026 — Machine-Service Market Snapshot
-
-At snapshot time the private Atinamos evidence catalogue contained 60,234 canonical machine services, 69,220 resolved marketplace/source records and 71,817 longitudinal source observations. The underlying PostgreSQL registry remains private; since 27 August 2026 a bounded read-only public projection can be searched through Atinamos Market Search. The published snapshot remains a timestamped aggregate research record.
-
-- [Machine-Service Market Snapshot — 24 August 2026](research/2026-08-24-machine-service-market-snapshot.md)
-- Human-readable article: https://verify.atinamos.co.uk/research/machine-service-market-snapshot-2026-08-24/
-
-The figures are timestamped Atinamos observations and are not presented as the total size of the global machine-service market.
-
-### 24 August 2026 — Observed ≠ Resolved
-
-A controlled x402.jobs ingestion test showed why an observed marketplace listing may contain useful evidence without yet establishing a canonical executable service identity. Atinamos retained unresolved listings rather than inventing missing HTTP methods.
-
-- [Observed ≠ Resolved: Why a Marketplace Listing Is Not Yet a Canonical Machine Contract](research/2026-08-24-observed-does-not-mean-resolved.md)
-- Human-readable article: https://verify.atinamos.co.uk/research/observed-does-not-mean-resolved/
-
-The controlled sample was 10 listings and is not presented as an estimate of the full x402.jobs catalogue.
-
-## Published evidence
-
-### 6 September 2026 — IBANforge external Assurance commissioning
-
-Atinamos completed two bounded paid controls against `POST https://api.ibanforge.com/v1/iban/validate`.
-
-```text
-positive fixture: DE89370400440532013000 → expected true  → observed true
-negative fixture: DE90370400440532013000 → expected false → observed false
-independent method: ISO 13616 MOD-97
-verified output field: valid
-payment: 0.005 USDC per control
-settlement: independently observed on Base for both
-fulfilment: observed for both
-signed Assurance receipts: 2
-```
-
-- [External commissioning record](experiments/2026-09-06-ibanforge-assurance-commissioning/README.md)
-
-**Supports:** the two timestamped paid controls, independent settlement observation, observed fulfilment, independent correctness comparison of the returned `valid` field and signed receipt publication.
-
-**Does not support:** universal IBAN correctness, correctness of BIC/SEPA/bank/LEI enrichment, internal implementation mechanism, permanent reliability, traffic indistinguishability, unattended production autonomy or a universal purchase recommendation.
-
-### 3 September 2026 — code402 LEI Check assurance series
-
-Atinamos completed a four-observation independent assurance series for `POST https://code402.dev/v1/tools/lei-check/call`.
-
-The series retained the original payment-contract observation, two bounded EOA purchases whose positive and negative checksum results matched independent ISO 7064 MOD-97-10 expectations, and one Circle smart-account payment-path interoperability observation.
-
-The two EOA purchases settled **999 atomic USDC** and **1371 atomic USDC** on Base. Both paid XDR-1 receipt signatures independently recovered to the published receipt signer, and both receipts' input/output hashes matched the exact paid inputs and returned results.
-
-The Circle smart-account authorization did not settle. It independently validated under EIP-1271, but code402 rejected the request because ordinary signature recovery did not recover to the smart-account `from` address. This is recorded as a pre-settlement payment interoperability issue rather than a failed fulfilment.
-
-Current live evidence summary:
-
-```text
-observations: 4
-paid tests: 2
-successful fulfilments: 2
-failed fulfilments: 0
-payment interoperability issues: 1
-```
-
-- [Completed technical experiment record](experiments/2026-09-03-code402-lei-check/README.md)
-- [Completed machine-readable evidence series](experiments/2026-09-03-code402-lei-check/evidence.json)
-- [Preserved original Phase-1 evidence](experiments/2026-09-03-code402-lei-check/evidence-phase1.json)
-
-**Supports:** these timestamped payment-contract, settlement, deterministic-output, receipt-verification and interoperability observations.
-
-**Does not support:** LEI registry existence, permanent reliability, provider-wide trustworthiness, universal smart-account incompatibility or a universal purchase recommendation.
-
-### 22 August 2026 — x402Node JSON Repair
-
-Atinamos independently exercised and paid the externally owned x402Node JSON Repair service, observed fulfilment and checked four objective output assertions. All four passed.
-
-- [Technical experiment record](experiments/2026-08-22-x402node-json-repair/README.md)
-- [Sanitised verification receipt](experiments/2026-08-22-x402node-json-repair/verification-receipt.json)
-
-**Classification:** `settled_fulfilment_valid`
-
-### 22 August 2026 — x402.direct Service Directory Search
-
-Atinamos observed a live x402 v1 payment requirement, recorded a malformed `payTo` field, created and sent the payment authorization, and received HTTP 500 on the authorised request. A subsequent read-only chain reconciliation found no 0.001 USDC settlement, and no fulfilment result was returned.
-
-- [Technical experiment record](experiments/2026-08-22-x402direct-search/README.md)
-- [Sanitised verification receipt](experiments/2026-08-22-x402direct-search/verification-receipt.json)
-
-**Classification:** `pre_settlement_paid_path_failure`
-
-### 22 August 2026 — x402engine Web Screenshot
-
-Atinamos paid 0.01 USDC for the externally owned Web Screenshot service. Settlement was observed and the paid request returned HTTP 200 with metadata matching the controlled target, but the primary screenshot value failed strict base64/PNG validation.
-
-- [Technical experiment record](experiments/2026-08-22-x402engine-web-screenshot/README.md)
-- [Sanitised verification receipt](experiments/2026-08-22-x402engine-web-screenshot/verification-receipt.json)
-
-**Classification:** `settled_fulfilment_contract_invalid`
-
-These are timestamped observations, not permanent trust ratings. Successful and unsuccessful observations are deliberately retained.
-
-## This repository may contain
+It may contain:
 
 - public evidence schemas;
 - sanitised verification receipts;
-- sample API responses;
-- public Market Search interface documentation;
 - methodology suitable for technical scrutiny;
-- experiment datasets selected for publication;
-- public research Markdown;
-- integration and buyer evidence-query examples;
-- public specifications;
-- later, potentially a small open-source evidence client.
+- deliberately published experiment records;
+- public research notes;
+- machine-interface documentation;
+- examples and specifications.
 
-## This repository does not contain
+It does **not** contain:
 
 - Atinamos operational source code;
-- verifier implementation;
-- Render Check implementation;
-- credentials, secrets or wallet material;
-- private infrastructure information;
-- the private PostgreSQL registry;
-- raw private source payloads;
+- private signing/wallet material;
+- private infrastructure credentials;
+- the private operational database;
 - unpublished anti-abuse techniques;
-- internal challenge-generation logic;
-- private operational documentation;
-- material that would materially assist gaming of verification.
+- material that would materially assist gaming of Assurance tests.
 
-GitHub is not where Atinamos Verification runs. It is where Atinamos publishes selected technical evidence and documentation for its public machine interfaces.
-
-## Repository structure
-
-- `mcp/` — public Atinamos Evidence MCP endpoint documentation, tool reference, buyer-policy schema and tested examples.
-- `market/` — public Market Search endpoint, scope and interpretation documentation.
-- `schemas/` — public machine-readable evidence schemas and format-versioning notes.
-- `examples/` — sanitised example requests, responses and receipts.
-- `methodology/` — public verification methodology and evidence interpretation.
-- `experiments/` — deliberately published experiment records.
-- `datasets/` — deliberately published public datasets.
-- `research/` — public technical research notes derived from controlled Atinamos observations and schema/interpretation audits.
-- `specifications/` — public technical specifications and interfaces.
-
-See `PUBLICATION_POLICY.md` before adding any material.
+GitHub is not where Atinamos Verification runs. It is where Atinamos publishes selected technical evidence and documentation for public scrutiny and machine consumption.
 
 ## Licensing
 
@@ -270,8 +279,4 @@ Copyright © 2026 MotionFil-AI.
 - Research, methodology, written evidence, findings, specifications and datasets are licensed under **CC BY 4.0** unless a file states otherwise.
 - Schemas, machine-readable receipts/examples and future source code are licensed under the **MIT License** unless a file states otherwise.
 
-See [LICENSE.md](LICENSE.md) for the full split-licence terms and suggested attribution.
-
-## Human-readable research
-
-The canonical human-readable publication layer is **verify.atinamos.co.uk**. Public website findings may link to supporting technical material in this repository where useful.
+See [LICENSE.md](LICENSE.md) for details.
