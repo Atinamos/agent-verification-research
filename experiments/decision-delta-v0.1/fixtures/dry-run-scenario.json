@@ -42,17 +42,29 @@
   "evidence_snapshot": {
     "fixture-cheap": {
       "known": true,
-      "policy_decision": "not_eligible",
-      "reason_codes": ["PRIOR_FAILED_FULFILMENT"]
+      "evidence_summary": {
+        "paid_tests": 1,
+        "successful_fulfilments": 0,
+        "failed_fulfilments": 1,
+        "successful_assertion_evaluations": 0,
+        "failed_assertion_evaluations": 0,
+        "last_verified": "2026-09-12T10:00:00Z"
+      }
     },
     "fixture-evidenced": {
       "known": true,
-      "policy_decision": "eligible",
-      "reason_codes": ["RECENT_SUCCESSFUL_FULFILMENT"]
+      "evidence_summary": {
+        "paid_tests": 1,
+        "successful_fulfilments": 1,
+        "failed_fulfilments": 0,
+        "successful_assertion_evaluations": 1,
+        "failed_assertion_evaluations": 0,
+        "last_verified": "2026-09-12T10:00:00Z"
+      }
     }
   },
   "notes": [
     "Synthetic fixture only. No provider, endpoint, price or evidence in this file may be included in the Decision Delta research dataset.",
-    "Expected plumbing behaviour: control chooses the cheaper candidate; evidence-assisted chooses the evidenced candidate, producing provider_delta and price_delta."
+    "Expected actual-buyer plumbing behaviour: control selects the first externally ranked cheap candidate; evidence-assisted rejects its failed fulfilment and selects the second candidate, producing provider_delta and price_delta."
   ]
 }
