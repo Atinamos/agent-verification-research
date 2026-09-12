@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://research.atinamos.co.uk/schemas/decision-delta-scenario-v0.1.schema.json",
+  "title": "Atinamos Decision Delta Scenario v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "scenario_id",
+    "protocol_version",
+    "task",
+    "budget_usdc",
+    "policy_id",
+    "task_requirements",
+    "candidates",
+    "evidence_snapshot"
+  ],
+  "properties": {
+    "scenario_id": {"type": "string", "minLength": 1},
+    "protocol_version": {"const": "0.1"},
+    "status": {"enum": ["draft", "frozen"]},
+    "task": {"type": "string", "minLength": 1},
+    "budget_usdc": {"type": "string", "pattern": "^[0-9]+(\\.[0-9]+)?$"},
+    "policy_id": {"type": "string", "minLength": 1},
+    "task_requirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["deterministic_correctness_required"],
+      "properties": {
+        "deterministic_correctness_required": {"type": "boolean"}
+      }
+    },
+    "snapshot_at": {"type": ["string", "null"], "format": "date-time"},
+    "candidates": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "candidate_id",
+          "provider",
+          "service_name",
+          "endpoint",
+          "method",
+          "price_usdc",
+          "network",
+          "machine_contract"
+        ],
+        "properties": {
+          "candidate_id": {"type": "string", "minLength": 1},
+          "provider": {"type": "string", "minLength": 1},
+          "service_name": {"type": "string", "minLength": 1},
+          "endpoint": {"type": "string", "format": "uri"},
+          "method": {"type": "string", "pattern": "^[A-Z]+$"},
+          "price_usdc": {"type": "string", "pattern": "^[0-9]+(\\.[0-9]+)?$"},
+          "network": {"type": "string", "minLength": 1},
+          "machine_contract": {"type": "object"},
+          "discovery_source": {"type": ["string", "null"]},
+          "contract_hash": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "evidence_snapshot": {
+      "type": "object",
+      "description": "Frozen treatment-only evidence keyed by candidate_id. The control payload omits this object.",
+      "additionalProperties": {"type": "object"}
+    },
+    "notes": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  }
+}
