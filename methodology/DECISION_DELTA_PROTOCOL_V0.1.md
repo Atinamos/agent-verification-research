@@ -12,15 +12,15 @@ Atinamos provides evidence. The buyer owns the procurement policy and final deci
 
 ## Primary hypothesis
 
-Providing independent service evidence changes the final procurement decision in a measurable proportion of otherwise matched autonomous purchasing situations.
+Providing independent service evidence changes the final procurement decision in one or more otherwise matched autonomous purchasing scenarios.
 
 ## Null hypothesis
 
-Providing independent service evidence causes no material change in the autonomous buyer's purchasing decision.
+Providing independent service evidence causes no material change in the autonomous buyer's purchasing decision across the frozen v0.1 scenarios.
 
 ## Experimental unit
 
-The unit of experiment is a matched Decision Pair comprising two isolated buyer sessions.
+The unit of experiment is a matched Decision Pair comprising two isolated buyer executions for one frozen scenario.
 
 ### Control
 
@@ -30,7 +30,7 @@ The buyer receives the same task, budget, buyer policy, candidates, candidate or
 
 The buyer receives the same information plus the Atinamos evidence available at the frozen experiment timestamp.
 
-The sessions must not share conversation history, memory or previous decisions.
+The executions must not share mutable state or previous decisions.
 
 ## Decision Delta
 
@@ -67,47 +67,48 @@ Payment settlement is not fulfilment. Fulfilment is not correctness. Correctness
 
 ## Buyer and policy
 
-Protocol v0.1 uses one fixed buyer implementation and one frozen primary buyer policy. The policy is buyer-owned. It must not simply encode `known service = buy` or `unknown service = reject`.
+Protocol v0.1 uses one fixed deterministic buyer implementation and one frozen primary buyer policy. The deterministic buyer preserves the externally frozen candidate order; buyer-owned policy controls eligibility. Atinamos evidence does not create a new relevance ranking.
+
+The policy must not simply encode `known service = buy` or `unknown service = reject`.
 
 Unknown services may remain eligible for bounded exploratory purchases where the frozen buyer policy permits them.
 
 The Policy API may return eligibility outcomes such as eligible, not_eligible or insufficient_evidence together with reasons and evidence references. It must not return a universal trust, safety or recommendation score.
 
+A stochastic/model-based buyer may be studied later as a replication experiment. It is deliberately excluded from the primary v0.1 design so model variance is not confused with the evidence treatment.
+
 ## Scenario requirements
 
-Protocol v0.1 should contain approximately 6–8 real scenarios, using independently owned paid machine services where possible. The frozen set should include cases covering:
+Protocol v0.1 should contain approximately 6–8 real scenarios, using independently owned paid machine services where possible. The frozen set should aim to cover several of the following evidence shapes where naturally available:
 
 - lower price with little/no independent evidence;
 - recent successful fulfilment evidence;
-- prior fulfilment or deliverable failure;
+- prior fulfilment or deliverable/assertion failure;
 - stale evidence;
-- payment success without successful fulfilment;
+- payment success without successful fulfilment, if a genuine independently observed example exists before freeze;
 - deterministic correctness evidence;
 - conflicting or path-specific evidence;
 - similarly evidenced candidates;
 - at least one case where evidence should legitimately make no difference.
 
-The experiment must not be designed so Atinamos evidence always changes the decision.
+The experiment must not manufacture an evidence shape merely to fill this list, and it must not be designed so Atinamos evidence always changes the decision.
 
 ## Controls against bias
 
 For each matched pair hold constant:
 
-- buyer implementation and model/version;
-- model settings where controllable;
+- buyer implementation/version;
 - task;
 - candidate set;
 - candidate order;
 - budget;
 - buyer policy;
 - candidate machine-facing descriptions;
-- advertised prices;
+- advertised/current contract prices frozen for the scenario;
 - payment network information;
 - frozen evidence snapshot time.
 
-Candidate order may be randomised between repetitions but must remain identical within each matched pair.
-
-Control and treatment sessions must be isolated.
+Control and treatment executions must be isolated. The only intended treatment difference is availability of the frozen Atinamos evidence snapshot.
 
 ## Candidate freeze
 
@@ -117,9 +118,10 @@ Before live runs, preserve for every candidate:
 - service name;
 - endpoint;
 - HTTP method;
-- discovery source;
+- discovery source and externally returned order;
 - machine contract/description available to the buyer;
-- advertised price;
+- directory/listing price where available;
+- live payment-challenge price used for the experiment;
 - network;
 - contract hash/fingerprint where available;
 - snapshot timestamp.
@@ -128,9 +130,11 @@ Candidates must not be replaced after results are seen unless recorded as a new 
 
 ## Run volume
 
-The initial study is exploratory rather than population-representative. A target of roughly 8 scenarios with repeated matched runs is preferred. Repeated runs within one scenario are clustered observations and must not be represented as independent market situations.
+The initial study is exploratory rather than population-representative. Because the v0.1 buyer is deterministic, the primary design uses **one matched Decision Pair per frozen scenario**. Re-running the identical deterministic pair would not create an independent observation and must not be used to inflate sample size.
 
-Results must be reported both per matched run and per scenario.
+The target is approximately 6–8 materially different frozen scenarios. Results are reported per scenario and across the frozen scenario set, with no claim that the observed proportion estimates prevalence across the wider agent-commerce market.
+
+A later replication study may use stochastic/model-based buyers, different buyer policies or independently selected scenario sets and may then justify repeated runs.
 
 ## Failure handling
 
@@ -144,7 +148,7 @@ Results must be reported both per matched run and per scenario.
 
 Preserve enough information for independent inspection or reproduction, including:
 
-- buyer task/prompt;
+- buyer task/prompt or structured task;
 - candidate descriptions available at decision time;
 - prices;
 - endpoint and HTTP method;
@@ -175,7 +179,7 @@ Private material should include credentials, wallet secrets, signing keys, priva
 Primary measures include:
 
 - completed Decision Pairs;
-- Decision Delta count/rate;
+- scenarios with a Decision Delta;
 - provider deltas;
 - abstention deltas;
 - fresh-evidence deltas;
@@ -192,7 +196,7 @@ A Decision Delta is evidence that independent evidence changed behaviour, not au
 
 Protocol v0.1 must not support claims that Atinamos universally makes agents safer, identifies trusted providers, or improves all purchasing decisions.
 
-A defensible result statement should remain bounded to the tested buyer, policy, services, tasks and time period.
+A defensible result statement should remain bounded to the tested deterministic buyer, policy, services, tasks and time period.
 
 ## Freeze rule
 
@@ -202,7 +206,7 @@ Before any Decision Delta live run:
 2. correct Policy API identity and evidence-dimension handling;
 3. freeze the primary buyer policy;
 4. build and dry-run the paired experiment harness without live spend;
-5. freeze 6–8 scenario definitions and candidate snapshots;
-6. version/hash the protocol and scenario package.
+5. freeze approximately 6–8 scenario definitions and candidate snapshots;
+6. version/hash the protocol, buyer policy and scenario package.
 
 Any substantive methodological change after freezing creates a new protocol version or is published as a documented deviation. The frozen v0.1 record is not rewritten after results are observed.
