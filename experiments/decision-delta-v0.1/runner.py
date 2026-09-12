@@ -65,10 +65,14 @@ def build_payload(
     policy: dict[str, Any],
     condition: str,
 ) -> dict[str, Any]:
+    decision_time = scenario.get("snapshot_at")
+    if scenario.get("status") == "frozen" and not decision_time:
+        raise ValueError("frozen scenario requires snapshot_at")
     payload = {
         "protocol_version": scenario["protocol_version"],
         "scenario_id": scenario["scenario_id"],
         "condition": condition,
+        "decision_time": decision_time,
         "task": scenario["task"],
         "budget_usdc": scenario["budget_usdc"],
         "task_requirements": scenario["task_requirements"],
