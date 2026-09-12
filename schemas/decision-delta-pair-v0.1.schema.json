@@ -9,6 +9,9 @@
     "scenario_id",
     "protocol_version",
     "execution_mode",
+    "eligible_for_analysis",
+    "seed",
+    "condition_order",
     "started_at",
     "completed_at",
     "scenario_sha256",
@@ -22,6 +25,19 @@
     "scenario_id": {"type": "string"},
     "protocol_version": {"const": "0.1"},
     "execution_mode": {"enum": ["dry_run_fixture", "decision_only", "live_purchase"]},
+    "eligible_for_analysis": {"type": "boolean"},
+    "seed": {"type": "integer", "minimum": 1},
+    "condition_order": {
+      "type": "array",
+      "prefixItems": [
+        {"enum": ["control", "evidence_assisted"]},
+        {"enum": ["control", "evidence_assisted"]}
+      ],
+      "items": false,
+      "minItems": 2,
+      "maxItems": 2,
+      "uniqueItems": true
+    },
     "started_at": {"type": "string", "format": "date-time"},
     "completed_at": {"type": "string", "format": "date-time"},
     "scenario_sha256": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
@@ -36,6 +52,8 @@
         "changed": {"type": "boolean"},
         "classifications": {
           "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
           "items": {
             "enum": [
               "provider_delta",
@@ -54,14 +72,14 @@
     "condition": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["condition", "input_sha256", "decision", "payment_attempted"],
+      "required": ["condition", "input_sha256", "decision", "payment_attempted", "purchase_result"],
       "properties": {
         "condition": {"enum": ["control", "evidence_assisted"]},
         "input_sha256": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
         "decision": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["action", "selected_candidate_id", "reason_codes"],
+          "required": ["action", "selected_candidate_id", "reason_codes", "notes"],
           "properties": {
             "action": {"enum": ["BUY", "ABSTAIN", "REVIEW", "REQUEST_FRESH_EVIDENCE"]},
             "selected_candidate_id": {"type": ["string", "null"]},
