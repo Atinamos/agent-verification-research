@@ -1,0 +1,67 @@
+{
+  "scenario_id": "DD-05-cheap-unknown-iban",
+  "protocol_version": "0.1",
+  "status": "draft",
+  "task": "Validate whether a supplied IBAN checksum is correct using a deterministic checksum-validation service.",
+  "budget_usdc": "0.01",
+  "policy_id": "balanced-v0.1",
+  "task_requirements": {
+    "deterministic_correctness_required": true
+  },
+  "snapshot_at": "2026-09-12T15:28:09.216500Z",
+  "candidate_selection": {
+    "primary_query": "IBAN checksum",
+    "primary_source": "https://x402.new/services?q=IBAN+checksum",
+    "objective_filter": "Retain executable Base-mainnet services whose public machine contract performs IBAN/checksum validation."
+  },
+  "candidates": [
+    {
+      "candidate_id": "openverbs-iban",
+      "provider": "OpenVerbs",
+      "service_name": "IBAN Validate",
+      "endpoint": "https://iban.openverbs.com/v1/validate",
+      "method": "POST",
+      "price_usdc": "0.004",
+      "network": "eip155:8453",
+      "machine_contract": {
+        "description": "IBAN validation service returned first for the frozen IBAN checksum query.",
+        "directory_query": "IBAN checksum",
+        "directory_rank_before_objective_filters": 1
+      },
+      "discovery_source": "https://x402.new/services?q=IBAN+checksum",
+      "contract_hash": null
+    },
+    {
+      "candidate_id": "delx-iban-checksum",
+      "provider": "DELX",
+      "service_name": "IBAN Checksum",
+      "endpoint": "https://api.delx.ai/api/v1/x402/iban-checksum",
+      "method": "POST",
+      "price_usdc": "0.001",
+      "network": "eip155:8453",
+      "machine_contract": {
+        "description": "Validate an IBAN checksum and return a deterministic valid boolean.",
+        "directory_query": "IBAN checksum",
+        "directory_rank_before_objective_filters": 2,
+        "example_response": {"schema": "delx/util-iban-checksum/v1", "valid": true}
+      },
+      "discovery_source": "https://x402.new/services?q=IBAN+checksum",
+      "contract_hash": null
+    }
+  ],
+  "evidence_snapshot": {
+    "openverbs-iban": {
+      "known": false,
+      "reason": "No applicable Atinamos evidence was held for the exact endpoint/method identity at snapshot time."
+    },
+    "delx-iban-checksum": {
+      "known": false,
+      "reason": "No applicable Atinamos evidence was held for the exact endpoint/method identity at snapshot time."
+    }
+  },
+  "notes": [
+    "This is a second explicit UNKNOWN != UNSAFE control in a different deterministic service family.",
+    "The historical IBANforge evidence was not attached because its previously paid exact route currently returned HTTP 200 without an x402 challenge; historical evidence is not silently rebound to a changed current contract.",
+    "Both exact candidate routes returned HTTP 402 without payment during preflight."
+  ]
+}
