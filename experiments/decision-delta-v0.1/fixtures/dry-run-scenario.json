@@ -1,0 +1,58 @@
+{
+  "scenario_id": "fixture-price-vs-evidence",
+  "protocol_version": "0.1",
+  "status": "draft",
+  "task": "Choose a machine service that repairs malformed JSON and return the repaired object.",
+  "budget_usdc": "0.02",
+  "policy_id": "balanced-v0.1",
+  "task_requirements": {
+    "deterministic_correctness_required": false
+  },
+  "snapshot_at": "2026-09-12T11:35:00Z",
+  "candidates": [
+    {
+      "candidate_id": "fixture-cheap",
+      "provider": "Fixture Provider A",
+      "service_name": "Fixture JSON Repair A",
+      "endpoint": "https://fixture.invalid/a",
+      "method": "POST",
+      "price_usdc": "0.001",
+      "network": "eip155:8453",
+      "machine_contract": {
+        "description": "Repairs malformed JSON and returns a JSON object."
+      },
+      "discovery_source": "fixture",
+      "contract_hash": null
+    },
+    {
+      "candidate_id": "fixture-evidenced",
+      "provider": "Fixture Provider B",
+      "service_name": "Fixture JSON Repair B",
+      "endpoint": "https://fixture.invalid/b",
+      "method": "POST",
+      "price_usdc": "0.006",
+      "network": "eip155:8453",
+      "machine_contract": {
+        "description": "Repairs malformed JSON and returns a JSON object."
+      },
+      "discovery_source": "fixture",
+      "contract_hash": null
+    }
+  ],
+  "evidence_snapshot": {
+    "fixture-cheap": {
+      "known": true,
+      "policy_decision": "not_eligible",
+      "reason_codes": ["PRIOR_FAILED_FULFILMENT"]
+    },
+    "fixture-evidenced": {
+      "known": true,
+      "policy_decision": "eligible",
+      "reason_codes": ["RECENT_SUCCESSFUL_FULFILMENT"]
+    }
+  },
+  "notes": [
+    "Synthetic fixture only. No provider, endpoint, price or evidence in this file may be included in the Decision Delta research dataset.",
+    "Expected plumbing behaviour: control chooses the cheaper candidate; evidence-assisted chooses the evidenced candidate, producing provider_delta and price_delta."
+  ]
+}
