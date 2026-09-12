@@ -1,0 +1,97 @@
+{
+  "scenario_id": "DD-03-screenshot-artifact",
+  "protocol_version": "0.1",
+  "status": "draft",
+  "task": "Capture https://example.com and return a valid base64-encoded PNG screenshot artefact. Deterministic correctness is required for the returned image payload.",
+  "budget_usdc": "0.05",
+  "policy_id": "balanced-v0.1",
+  "task_requirements": {
+    "deterministic_correctness_required": true
+  },
+  "snapshot_at": "2026-09-12T15:28:09.216500Z",
+  "candidate_selection": {
+    "primary_query": "web screenshot",
+    "primary_source": "https://x402.new/services?q=web+screenshot",
+    "objective_filter": "Retain services whose machine contract exposes a screenshot artefact suitable for deterministic payload validation. Relaystation was excluded because its published example exposed only an ok flag and did not establish an image artefact contract."
+  },
+  "candidates": [
+    {
+      "candidate_id": "toolcall-screenshot",
+      "provider": "Toolsmith / toolcall.click",
+      "service_name": "Web Screenshot",
+      "endpoint": "https://toolcall.click/t/web/screenshot",
+      "method": "GET",
+      "price_usdc": "0.015",
+      "network": "eip155:8453",
+      "machine_contract": {
+        "description": "Full-fidelity screenshot captured by Chrome; returns JSON including format=png and imageBase64.",
+        "directory_query": "web screenshot",
+        "directory_rank_before_objective_filters": 2,
+        "preflight_invocation": "https://toolcall.click/t/web/screenshot?full=1&url=https%3A%2F%2Fexample.com&width=1280"
+      },
+      "discovery_source": "https://x402.new/services?q=web+screenshot",
+      "contract_hash": null
+    },
+    {
+      "candidate_id": "x402engine-screenshot",
+      "provider": "x402engine",
+      "service_name": "Web Screenshot",
+      "endpoint": "https://x402engine.app/api/web/screenshot",
+      "method": "GET",
+      "price_usdc": "0.010",
+      "network": "eip155:8453",
+      "machine_contract": {
+        "description": "Capture a screenshot of any URL and return a base64-encoded image.",
+        "directory_query": "web screenshot",
+        "directory_rank_before_objective_filters": 3,
+        "preflight_invocation": "https://x402engine.app/api/web/screenshot?fullPage=false&url=https%3A%2F%2Fexample.com"
+      },
+      "discovery_source": "https://x402.new/services?q=web+screenshot",
+      "contract_hash": null
+    },
+    {
+      "candidate_id": "orthogonal-screenshot",
+      "provider": "Orthogonal",
+      "service_name": "Web Screenshot",
+      "endpoint": "https://x402.orthogonal.com/context-dev/web/screenshot",
+      "method": "GET",
+      "price_usdc": "0.030",
+      "network": "eip155:8453",
+      "machine_contract": {
+        "description": "Capture a website screenshot with viewport and full-page modes.",
+        "directory_query": "web screenshot",
+        "directory_rank_before_objective_filters": 4
+      },
+      "discovery_source": "https://x402.new/services?q=web+screenshot",
+      "contract_hash": null
+    }
+  ],
+  "evidence_snapshot": {
+    "toolcall-screenshot": {
+      "known": false,
+      "reason": "No applicable Atinamos evidence was held for the exact endpoint/method identity at snapshot time."
+    },
+    "x402engine-screenshot": {
+      "known": true,
+      "evidence_summary": {
+        "paid_tests": 1,
+        "successful_fulfilments": 1,
+        "failed_fulfilments": 0,
+        "successful_assertion_evaluations": 0,
+        "failed_assertion_evaluations": 1,
+        "last_verified": "2026-08-22T12:43:53.670388Z"
+      },
+      "evidence_references": ["docs/evidence/2026-08-22-x402engine-web-screenshot.json"]
+    },
+    "orthogonal-screenshot": {
+      "known": false,
+      "reason": "No applicable Atinamos evidence was held for the exact endpoint/method identity at snapshot time."
+    }
+  },
+  "notes": [
+    "All three exact routes returned HTTP 402 without payment during preflight.",
+    "Live challenge prices, not directory display prices, are used for the frozen candidate price.",
+    "The x402engine observation is successful fulfilment with failed artefact/correctness validation, not failed fulfilment.",
+    "Expected outcome is not part of the frozen scenario."
+  ]
+}
