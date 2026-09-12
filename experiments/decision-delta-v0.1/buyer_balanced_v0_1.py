@@ -75,11 +75,10 @@ def evaluate_candidate(
         cap = money(policy["unknown_service"]["exploratory_cap_usdc"])
         handling = policy["unknown_service"]["handling"]
         if handling == "allow_below_exploratory_cap" and price <= cap:
-            # A task that explicitly requires deterministic correctness cannot be
-            # satisfied merely by absence of contrary evidence.
+            reasons.append("UNKNOWN_ALLOWED_WITHIN_EXPLORATORY_CAP")
             if task_requirements.get("deterministic_correctness_required") is True:
-                return "review", reasons + ["CORRECTNESS_EVIDENCE_REQUIRED_BUT_UNKNOWN"]
-            return "eligible", reasons + ["UNKNOWN_ALLOWED_WITHIN_EXPLORATORY_CAP"]
+                reasons.append("POST_PURCHASE_CORRECTNESS_VALIDATION_REQUIRED")
+            return "eligible", reasons
         return "review", reasons + ["UNKNOWN_ABOVE_EXPLORATORY_CAP"]
 
     reasons.append("PUBLISHED_EVIDENCE_PRESENT")
@@ -131,8 +130,6 @@ def decide(payload: dict[str, Any]) -> dict[str, Any]:
     task_requirements = payload.get("task_requirements") or {}
     task_budget = money(payload["budget_usdc"])
 
-    # The scenario snapshot time is deliberately supplied to the buyer adapter by
-    # the runner payload when scenarios are frozen. Until then use current UTC.
     now_value = payload.get("decision_time")
     now = parse_time(now_value) or datetime.now(timezone.utc)
 
