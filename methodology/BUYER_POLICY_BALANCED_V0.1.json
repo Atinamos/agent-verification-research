@@ -1,0 +1,20 @@
+{
+  "policy_id": "balanced-v0.1",
+  "status": "draft",
+  "max_total_spend_usdc": "0.25",
+  "max_service_price_usdc": "0.05",
+  "allowed_networks": ["eip155:8453"],
+  "max_evidence_age_days": 30,
+  "minimum_successful_fulfilments": 1,
+  "maximum_failed_fulfilments": 0,
+  "unknown_service_handling": "allow_below_exploratory_cap",
+  "unknown_service_exploratory_cap_usdc": "0.01",
+  "require_paid_evidence": false,
+  "require_deterministic_correctness_when_task_demands_it": true,
+  "indeterminate_evidence": "review",
+  "notes": [
+    "This is a buyer-owned experimental procurement policy, not an Atinamos trust level.",
+    "Unknown does not mean unsafe; bounded exploratory purchase is permitted below the exploratory cap.",
+    "The live policy adapter will be frozen only after HTTP-method identity and evidence-dimension separation are confirmed."
+  ]
+}
