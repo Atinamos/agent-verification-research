@@ -1,0 +1,112 @@
+{
+  "scenario_id": "DD-02-deterministic-json-repair",
+  "protocol_version": "0.1",
+  "status": "draft",
+  "task": "Repair malformed JSON into a semantically equivalent valid JSON object. Deterministic correctness is required.",
+  "budget_usdc": "0.02",
+  "policy_id": "balanced-v0.1",
+  "task_requirements": {
+    "deterministic_correctness_required": true
+  },
+  "snapshot_at": "2026-09-12T15:28:09.216500Z",
+  "candidate_selection": {
+    "primary_query": "deterministic json repair",
+    "primary_source": "https://x402.new/services?q=deterministic+json+repair",
+    "fallback_query": "repair malformed json",
+    "fallback_source": "https://x402.new/services?q=repair+malformed+json",
+    "fallback_rule": "The primary query returned fewer than two executable candidates. Under the predeclared broadening rule, append task-fit candidates from the broader query while preserving each query's external order."
+  },
+  "candidates": [
+    {
+      "candidate_id": "hermes-json-schema-repair",
+      "provider": "Hermes Commerce",
+      "service_name": "JSON Schema Repair (Deterministic)",
+      "endpoint": "https://agent.kihustle.tech/services/json-schema-repair/jobs",
+      "method": "POST",
+      "price_usdc": "0.010",
+      "network": "eip155:8453",
+      "machine_contract": {
+        "description": "Deterministic JSON repair with schema checking.",
+        "directory_query": "deterministic json repair",
+        "directory_rank_before_objective_filters": 1
+      },
+      "discovery_source": "https://x402.new/services?q=deterministic+json+repair",
+      "contract_hash": null
+    },
+    {
+      "candidate_id": "keyronne-json-repair",
+      "provider": "Keyronne",
+      "service_name": "JSON Repair",
+      "endpoint": "https://keyronne.com/api/json-repair",
+      "method": "POST",
+      "price_usdc": "0.001",
+      "network": "eip155:8453",
+      "machine_contract": {
+        "description": "Repair malformed JSON and return a parsed value plus repair information.",
+        "directory_query": "repair malformed json",
+        "directory_rank_before_objective_filters": 1
+      },
+      "discovery_source": "https://x402.new/services?q=repair+malformed+json",
+      "contract_hash": null
+    },
+    {
+      "candidate_id": "fenix-json-repair",
+      "provider": "FenixFoundry",
+      "service_name": "JSON Repair + Optional Schema Validation",
+      "endpoint": "https://x402.fenixfoundry.com/repair-json",
+      "method": "POST",
+      "price_usdc": "0.003",
+      "network": "eip155:8453",
+      "machine_contract": {
+        "description": "Repair malformed JSON with optional schema validation.",
+        "directory_query": "repair malformed json",
+        "directory_rank_before_objective_filters": 2
+      },
+      "discovery_source": "https://x402.new/services?q=repair+malformed+json",
+      "contract_hash": null
+    }
+  ],
+  "evidence_snapshot": {
+    "hermes-json-schema-repair": {
+      "known": true,
+      "evidence_summary": {
+        "paid_tests": 1,
+        "successful_fulfilments": 1,
+        "failed_fulfilments": 0,
+        "successful_assertion_evaluations": 0,
+        "failed_assertion_evaluations": 1,
+        "last_verified": "2026-08-28T10:52:55.571640Z"
+      },
+      "evidence_references": ["docs/evidence/2026-08-28-proof3-04-hermes-commerce-kihustle-tech.json"]
+    },
+    "keyronne-json-repair": {
+      "known": true,
+      "evidence_summary": {
+        "paid_tests": 1,
+        "successful_fulfilments": 1,
+        "failed_fulfilments": 0,
+        "successful_assertion_evaluations": 1,
+        "failed_assertion_evaluations": 0,
+        "last_verified": "2026-08-28T10:52:50.381298Z"
+      },
+      "evidence_references": ["docs/evidence/2026-08-28-proof3-01-keyronne.json"]
+    },
+    "fenix-json-repair": {
+      "known": true,
+      "evidence_summary": {
+        "paid_tests": 1,
+        "successful_fulfilments": 1,
+        "failed_fulfilments": 0,
+        "successful_assertion_evaluations": 1,
+        "failed_assertion_evaluations": 0,
+        "last_verified": "2026-08-28T10:52:53.439585Z"
+      },
+      "evidence_references": ["docs/evidence/2026-08-28-proof3-03-fenixfoundry-agent-reader.json"]
+    }
+  },
+  "notes": [
+    "The primary query and fallback rule were fixed before treatment decisions were run.",
+    "The Hermes observation is represented as successful fulfilment with failed correctness/assertion evaluation, not as failed fulfilment.",
+    "Expected outcome is not part of the frozen scenario."
+  ]
+}
