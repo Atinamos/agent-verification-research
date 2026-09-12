@@ -1,0 +1,59 @@
+{
+  "status": "pre-freeze",
+  "source": "https://x402.new/services",
+  "captured_at": "2026-09-12T11:47:42.013862+00:00",
+  "principle": "Candidate search/order is external to Atinamos evidence. This snapshot does not itself prove executability, payment or fulfilment.",
+  "queries": [
+    {
+      "scenario_family": "dd-json-basic",
+      "query": "json repair",
+      "service_paths": [
+        "/services/keyronne-com-api-json-repair",
+        "/services/agent-atinamos-co-uk-agent-json-repair",
+        "/services/agentproof-murex-vercel-app-json-repair",
+        "/services/agent-kihustle-tech-services-json-schema-repair-jobs",
+        "/services/agent-data-fixer-production-up-railway-app-json-repair",
+        "/services/apiacre-com-v1-data-json-repair",
+        "/services/animica-dev-x402-json-repair",
+        "/services/x402-agentfund-net-x402-structured-json-repair",
+        "/services/foundry-par007-machine-revenue-mainnet-inference-chip-index-workers-dev-v1-json-repair",
+        "/services/api-geoprimitives-dev-v1-geojson-repair",
+        "/services/app-heinrichstech-com-v1-cdp-json-repair",
+        "/services/netintel-dev-json-repair",
+        "/services/tools-halowerk-com-v1-json-repair"
+      ]
+    },
+    {
+      "scenario_family": "dd-json-schema",
+      "query": "repair malformed JSON and validate against JSON schema",
+      "service_paths": []
+    },
+    {
+      "scenario_family": "dd-screenshot",
+      "query": "web screenshot",
+      "service_paths": [
+        "/services/api-relaystation-ai-v1-web-screenshot",
+        "/services/toolcall-click-t-web-screenshot",
+        "/services/x402engine-app-api-web-screenshot",
+        "/services/x402-orthogonal-com-context-dev-web-screenshot"
+      ]
+    },
+    {
+      "scenario_family": "dd-iban",
+      "query": "validate IBAN checksum",
+      "service_paths": [
+        "/services/api-delx-ai-api-v1-x402-iban-checksum"
+      ]
+    },
+    {
+      "scenario_family": "dd-service-search",
+      "query": "paid machine service directory search",
+      "service_paths": []
+    }
+  ],
+  "pre_freeze_notes": [
+    "The full natural-language query can be too narrow for directory discovery. A broader keyword query may be frozen for final candidate selection when this pre-freeze snapshot returns fewer than two task-fit services.",
+    "Atinamos-owned services are excluded from primary external-service candidate sets by the published candidate-selection rule, not by evidence outcome.",
+    "No payment was authorised while creating this snapshot."
+  ]
+}
