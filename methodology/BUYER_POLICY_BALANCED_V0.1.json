@@ -1,20 +1,34 @@
 {
   "policy_id": "balanced-v0.1",
-  "status": "draft",
-  "max_total_spend_usdc": "0.25",
-  "max_service_price_usdc": "0.05",
-  "allowed_networks": ["eip155:8453"],
-  "max_evidence_age_days": 30,
-  "minimum_successful_fulfilments": 1,
-  "maximum_failed_fulfilments": 0,
-  "unknown_service_handling": "allow_below_exploratory_cap",
-  "unknown_service_exploratory_cap_usdc": "0.01",
-  "require_paid_evidence": false,
-  "require_deterministic_correctness_when_task_demands_it": true,
+  "status": "candidate",
+  "budget": {
+    "max_total_spend_usdc": "0.25",
+    "max_service_price_usdc": "0.05"
+  },
+  "payment": {
+    "allowed_networks": ["eip155:8453"]
+  },
+  "unknown_service": {
+    "handling": "allow_below_exploratory_cap",
+    "exploratory_cap_usdc": "0.01"
+  },
+  "known_evidence_requirements": {
+    "max_evidence_age_days": 30,
+    "minimum_successful_fulfilments": 1,
+    "maximum_failed_fulfilments": 0,
+    "require_paid_evidence": false
+  },
+  "deterministic_correctness": {
+    "when_task_requires_it": true,
+    "minimum_successful_assertion_evaluations": 1,
+    "maximum_failed_assertion_evaluations": 0
+  },
   "indeterminate_evidence": "review",
   "notes": [
     "This is a buyer-owned experimental procurement policy, not an Atinamos trust level.",
-    "Unknown does not mean unsafe; bounded exploratory purchase is permitted below the exploratory cap.",
-    "The live policy adapter will be frozen only after HTTP-method identity and evidence-dimension separation are confirmed."
+    "Unknown does not mean unsafe. An unknown service may be explored only within the explicit exploratory price cap.",
+    "Evidence requirements apply to known services. Unknown-service price handling is enforced by the buyer harness using candidate information, not invented Atinamos evidence.",
+    "PAYMENT, FULFILMENT and assertion/correctness evidence remain separate dimensions.",
+    "Status changes to frozen only after the policy implementation and paired dry-run pass the pre-run gate."
   ]
 }
