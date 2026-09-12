@@ -299,7 +299,7 @@ def main() -> int:
         "scenario_id": scenario["scenario_id"],
         "protocol_version": scenario["protocol_version"],
         "execution_mode": "decision_only" if args.buyer_command else "dry_run_fixture",
-        "eligible_for_analysis": bool(args.buyer_command),
+        "eligible_for_analysis": bool(args.buyer_command) and scenario.get("status") == "frozen",
         "seed": seed,
         "condition_order": order,
         "started_at": started,
