@@ -30,6 +30,10 @@
       }
     },
     "snapshot_at": {"type": ["string", "null"], "format": "date-time"},
+    "candidate_selection": {
+      "type": "object",
+      "description": "Frozen provenance for the external search/query and any predeclared broadening rule used to construct the candidate set."
+    },
     "candidates": {
       "type": "array",
       "minItems": 2,
