@@ -1,0 +1,94 @@
+{
+  "scenario_id": "DD-04-cheap-unknown-json",
+  "protocol_version": "0.1",
+  "status": "draft",
+  "task": "Repair malformed JSON into valid JSON while preserving its semantic data.",
+  "budget_usdc": "0.02",
+  "policy_id": "balanced-v0.1",
+  "task_requirements": {
+    "deterministic_correctness_required": true
+  },
+  "snapshot_at": "2026-09-12T15:28:09.216500Z",
+  "candidate_selection": {
+    "primary_query": "repair JSON",
+    "primary_source": "https://x402.new/services?q=repair+JSON",
+    "objective_filter": "Retain executable Base-mainnet JSON-repair services in external order."
+  },
+  "candidates": [
+    {
+      "candidate_id": "genesis-json-repair",
+      "provider": "Genesis",
+      "service_name": "Repair JSON",
+      "endpoint": "https://genesis.palsus2023.workers.dev/v1/repair_json",
+      "method": "POST",
+      "price_usdc": "0.003",
+      "network": "eip155:8453",
+      "machine_contract": {
+        "description": "Repair JSON payloads.",
+        "directory_query": "repair JSON",
+        "directory_rank_before_objective_filters": 1
+      },
+      "discovery_source": "https://x402.new/services?q=repair+JSON",
+      "contract_hash": null
+    },
+    {
+      "candidate_id": "fenix-json-repair",
+      "provider": "FenixFoundry",
+      "service_name": "JSON Repair + Optional Schema Validation",
+      "endpoint": "https://x402.fenixfoundry.com/repair-json",
+      "method": "POST",
+      "price_usdc": "0.003",
+      "network": "eip155:8453",
+      "machine_contract": {
+        "description": "Repair malformed JSON with optional schema validation.",
+        "directory_query": "repair JSON",
+        "directory_rank_before_objective_filters": 2
+      },
+      "discovery_source": "https://x402.new/services?q=repair+JSON",
+      "contract_hash": null
+    },
+    {
+      "candidate_id": "underscore-json-suite",
+      "provider": "UnderscoreDone",
+      "service_name": "JSON Suite",
+      "endpoint": "https://json-suite.underscoredone.com/json",
+      "method": "POST",
+      "price_usdc": "0.010",
+      "network": "eip155:8453",
+      "machine_contract": {
+        "description": "JSON processing/repair service returned for the frozen repair JSON query.",
+        "directory_query": "repair JSON",
+        "directory_rank_before_objective_filters": 3
+      },
+      "discovery_source": "https://x402.new/services?q=repair+JSON",
+      "contract_hash": null
+    }
+  ],
+  "evidence_snapshot": {
+    "genesis-json-repair": {
+      "known": false,
+      "reason": "No applicable Atinamos evidence was held for the exact endpoint/method identity at snapshot time."
+    },
+    "fenix-json-repair": {
+      "known": true,
+      "evidence_summary": {
+        "paid_tests": 1,
+        "successful_fulfilments": 1,
+        "failed_fulfilments": 0,
+        "successful_assertion_evaluations": 1,
+        "failed_assertion_evaluations": 0,
+        "last_verified": "2026-08-28T10:52:53.439585Z"
+      },
+      "evidence_references": ["docs/evidence/2026-08-28-proof3-03-fenixfoundry-agent-reader.json"]
+    },
+    "underscore-json-suite": {
+      "known": false,
+      "reason": "No applicable Atinamos evidence was held for the exact endpoint/method identity at snapshot time."
+    }
+  },
+  "notes": [
+    "This scenario deliberately tests UNKNOWN != UNSAFE: the externally first unknown service is below the buyer's exploratory cap.",
+    "A no-change result is expected to be scientifically useful but is not encoded into the buyer or protocol.",
+    "All listed exact routes returned HTTP 402 without payment during preflight."
+  ]
+}
