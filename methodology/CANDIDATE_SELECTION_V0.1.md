@@ -29,6 +29,21 @@ For each task family:
 9. freeze the accepted candidate set, order, machine contract, price, method, network, route and snapshot time;
 10. only after that freeze may the treatment evidence snapshot be joined to candidate identities.
 
+## Neutral search broadening rule
+
+A natural-language task query may sometimes return fewer than two usable services even though the directory contains relevant services under shorter keywords. To avoid ad-hoc provider selection, Protocol v0.1 uses this pre-declared fallback:
+
+1. run the frozen specific task query;
+2. if fewer than two objectively task-fit candidates survive, run one broader **task-domain keyword** query chosen from the task wording, not from a provider name (for example `json repair`, `web screenshot`, or `iban`);
+3. keep all surviving services from the specific query first, in their external order;
+4. append non-duplicate objectively task-fit services from the broader query in their external order;
+5. apply the same network, price, contract-availability and zero-spend preflight rules;
+6. stop when the scenario reaches its predeclared maximum candidate count.
+
+Atinamos evidence may not be consulted to decide which broadening term to use, which returned service to append, or where it is placed.
+
+If the broadening process still yields fewer than two executable candidates, that scenario is not eligible for the primary paired experiment.
+
 ## Current executable-contract rule
 
 Directory price is not authoritative for the experiment.
