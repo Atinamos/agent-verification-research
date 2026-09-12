@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://research.atinamos.co.uk/schemas/decision-delta-pair-v0.1.schema.json",
+  "title": "Atinamos Decision Delta Pair v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "pair_id",
+    "scenario_id",
+    "protocol_version",
+    "execution_mode",
+    "started_at",
+    "completed_at",
+    "scenario_sha256",
+    "policy_sha256",
+    "control",
+    "evidence_assisted",
+    "decision_delta"
+  ],
+  "properties": {
+    "pair_id": {"type": "string"},
+    "scenario_id": {"type": "string"},
+    "protocol_version": {"const": "0.1"},
+    "execution_mode": {"enum": ["dry_run_fixture", "decision_only", "live_purchase"]},
+    "started_at": {"type": "string", "format": "date-time"},
+    "completed_at": {"type": "string", "format": "date-time"},
+    "scenario_sha256": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "policy_sha256": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "control": {"$ref": "#/$defs/condition"},
+    "evidence_assisted": {"$ref": "#/$defs/condition"},
+    "decision_delta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["changed", "classifications"],
+      "properties": {
+        "changed": {"type": "boolean"},
+        "classifications": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "provider_delta",
+              "abstention_delta",
+              "fresh_evidence_delta",
+              "price_delta",
+              "risk_response_delta",
+              "no_delta"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "condition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["condition", "input_sha256", "decision", "payment_attempted"],
+      "properties": {
+        "condition": {"enum": ["control", "evidence_assisted"]},
+        "input_sha256": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+        "decision": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["action", "selected_candidate_id", "reason_codes"],
+          "properties": {
+            "action": {"enum": ["BUY", "ABSTAIN", "REVIEW", "REQUEST_FRESH_EVIDENCE"]},
+            "selected_candidate_id": {"type": ["string", "null"]},
+            "reason_codes": {"type": "array", "items": {"type": "string"}},
+            "notes": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "payment_attempted": {"type": "boolean"},
+        "purchase_result": {"type": ["object", "null"]}
+      }
+    }
+  }
+}
