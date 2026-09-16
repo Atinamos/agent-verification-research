@@ -6,8 +6,8 @@ For the current consolidated evidence record, start with the [Public Evidence In
 
 ## Latest
 
-- [16 Sep 2026 — Agent fleets and process evidence in autonomous commerce](2026-09-16-agent-fleets-process-evidence.md)  
-  Connects emerging AI-agent scale with buyer policy and process-level evidence, while grounding all Atinamos-specific claims in published experiments. Canonical human-readable article: https://atinamoslabs.co.uk/research/agent-fleets-process-evidence/
+- [16 Sep 2026 — Agent fleets and process evidence in autonomous commerce](2026-09-16-agent-fleets-process-evidence.md) — **v1.1**  
+  Asks whether seller-independent, machine-readable evidence can measurably improve autonomous procurement. The revision defines the independence boundary, discloses the Proof #3 evidence-acquisition round, narrows the frozen-plan Runner claim, distinguishes signed-receipt integrity from full third-party reconstruction, records economic/adversarial limitations and proposes a matched control experiment. Canonical human-readable article: https://atinamoslabs.co.uk/research/agent-fleets-process-evidence/
 
 ## Experiment and architecture notes
 
@@ -21,5 +21,7 @@ For the current consolidated evidence record, start with the [Public Evidence In
 ## Interpretation
 
 These notes report bounded observations or research arguments. They are not provider ratings, certifications or universal purchase recommendations.
+
+Where current Atinamos agent-commerce research uses **independent evidence**, the intended default meaning is **seller-independent observation** unless a stronger independence claim is explicitly stated.
 
 > **Atinamos records evidence. The buyer decides what that evidence means.**
